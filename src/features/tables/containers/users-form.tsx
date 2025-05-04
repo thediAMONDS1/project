@@ -8,7 +8,6 @@ export default async function UsersForm() {
     <TableLayout
       title={"Users"}
       formcomponent={undefined}
-      description={"users description"}
       columns={columns}
       data={data}
     />

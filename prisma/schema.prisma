@@ -13,21 +13,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// model User {
-//   id           String   @id @default(cuid())
-//   login        String
-//   passwordHash String
-//   salt         String
-//   role         String   @default("user")
-//   phone        String
-//   email        String
-//   name         String
-//   last_name    String
-//   created_at   DateTime @default(now())
-// }
-
 model Order {
-  id                String @id @default(cuid())
+  id                String   @id @default(cuid())
   type              String
   weight            BigInt
   departure_point   String
@@ -37,17 +24,8 @@ model Order {
   status            String
   carrier           String
   created_by        String
-  created_at        String
+  created_at        DateTime @default(now()) @db.Date
 }
-
-// generator client {
-//   provider = "prisma-client-js"
-// }
-
-// datasource db {
-//   provider = "postgresql"
-//   url      = env("DATABASE_URL")
-// }
 
 // Основная информация о пользователе
 model User {
@@ -59,6 +37,12 @@ model User {
   created_at    DateTime     @default(now()) @db.Date
   profile       UserProfile? // Связь один-к-одному с профилем
   // settings      UserSettings? // Связь один-к-одному с настройками
+
+  CargoIn      CargoIn[]
+  VesselVoyage VesselVoyage[]
+  Vessel       Vessel[]
+  CargoLoad    CargoLoad[]
+  CargoActIn   CargoActIn[]
 }
 
 // Дополнительная информация о пользователе
@@ -81,93 +65,99 @@ model UserProfile {
 //   user     User   @relation(fields: [user_id], references: [id]) // Связь с User
 // }
 
-// // Справочник. Вагон. Номер вагона, тип вагона (крытый, полувагон).
-// model Wagon {
-//   id         BigInt    @id @default(autoincrement())
-//   wagon_no   Int
-//   wagon_type String
-//   cargoIn    CargoIn[] // Связь один-ко-многим с CargoIn
-// }
+// Справочник. Вагон. Номер вагона, тип вагона (крытый, полувагон).
+model Wagon {
+  id           BigInt @id @default(autoincrement())
+  wagon_number Int
+  wagon_type   String
 
-// // Приемные акты. Прием груза оформляется приемным актом.
-// model CargoActIn {
-//   id           BigInt           @id @default(autoincrement())
-//   act_in_no    Int
-//   act_in_date  DateTime         @db.Date
-//   status       CargoActInStatus @relation(fields: [statusId], references: [id])
-//   statusId     BigInt // Внешний ключ для связи с CargoActInStatus
-//   supplier_id  Int
-//   rail_waybill Int
-//   user         User             @relation(fields: [user_id], references: [id])
-//   user_id      BigInt // Внешний ключ для связи с User
-//   cargoIn      CargoIn[] // Связь один-ко-многим с CargoIn
-//   CargoLoad    CargoLoad[]
+  cargoIn CargoIn[] // Связь один-ко-многим с CargoIn
+}
 
-//   @@unique([act_in_no, act_in_date])
-// }
+// Приемные акты. Прием груза оформляется приемным актом.
+model CargoActIn {
+  id           BigInt           @id @default(autoincrement())
+  act_in_no    Int
+  act_in_date  DateTime         @db.Date
+  status       CargoActInStatus @relation(fields: [statusId], references: [id])
+  statusId     BigInt // Внешний ключ для связи с CargoActInStatus
+  supplier_id  Int
+  rail_waybill Int
+  user         User             @relation(fields: [user_id], references: [id])
+  user_id      String // Внешний ключ для связи с User
 
-// // Справочник. Статусы приемных актов.
-// model CargoActInStatus {
-//   id          BigInt       @id @default(autoincrement())
-//   status_name String
-//   cargoActIn  CargoActIn[] // Связь один-ко-многим с CargoActIn
-// }
+  cargoIn   CargoIn[] // Связь один-ко-многим с CargoIn
+  CargoLoad CargoLoad[]
 
-// // Справочник. Груз.
-// model Cargo {
-//   id         BigInt    @id @default(autoincrement())
-//   cargo_name String
-//   cargoIn    CargoIn[] // Связь один-ко-многим с CargoIn
-// }
+  @@unique([act_in_no, act_in_date])
+}
 
-// // Таблица прихода груза. Наименования груза, вес брутто, вес брутто остаток, приемный акт, склад, тип хранения (открытое, закрытое)
-// model CargoIn {
-//   id                 BigInt     @id @default(autoincrement())
-//   cargo              Cargo      @relation(fields: [cargo_id], references: [id])
-//   cargo_id           BigInt // Внешний ключ для связи с Cargo
-//   weight_brutto      Int
-//   weight_brutto_rest Int
-//   cargoActIn         CargoActIn @relation(fields: [cargo_act_in_id], references: [id])
-//   cargo_act_in_id    BigInt // Внешний ключ для связи с CargoActIn
-//   warehouse          Int
-//   storage_type_id    Int
-//   wagon              Wagon      @relation(fields: [wagon_id], references: [id])
-//   wagon_id           BigInt // Внешний ключ для связи с Wagon
-//   user               User       @relation(fields: [user_id], references: [id])
-//   user_id            BigInt // Внешний ключ для связи с User
-// }
+// Справочник. Статусы приемных актов.
+model CargoActInStatus {
+  id          BigInt @id @default(autoincrement())
+  status_name String
 
-// // Морские рейсы
-// model VesselVoyage {
-//   id                       Int         @id @default(autoincrement())
-//   estimated_date_departure DateTime    @db.Date
-//   vessel                   Vessel      @relation(fields: [vessel_id], references: [id])
-//   vessel_id                Int // Внешний ключ для связи с Vessel
-//   user                     User        @relation(fields: [user_id], references: [id])
-//   user_id                  BigInt // Внешний ключ для связи с User
-//   cargoLoad                CargoLoad[] // Связь один-ко-многим с CargoLoad
-// }
+  cargoActIn CargoActIn[] // Связь один-ко-многим с CargoActIn
+}
 
-// // Справочник судов
-// model Vessel {
-//   id          Int            @id @default(autoincrement())
-//   vessel_name String
-//   user        User           @relation(fields: [user_id], references: [id])
-//   user_id     BigInt // Внешний ключ для связи с User
-//   voyages     VesselVoyage[] // Связь один-ко-многим с VesselVoyage
-// }
+// Справочник. Груз.
+model Cargo {
+  id         BigInt @id @default(autoincrement())
+  cargo_name String
 
-// // Отгрузка груза на суда. Дата погрузки, номер рейса, вес брутто, приемный акт, отправитель, получатель
-// model CargoLoad {
-//   id               Int          @id @default(autoincrement())
-//   load_date        DateTime     @db.Date
-//   vesselVoyage     VesselVoyage @relation(fields: [vessel_voyage_id], references: [id])
-//   vessel_voyage_id Int // Внешний ключ для связи с VesselVoyage
-//   weight_brutto    Int
-//   cargoActIn       CargoActIn   @relation(fields: [cargo_act_in_id], references: [id])
-//   cargo_act_in_id  BigInt // Внешний ключ для связи с CargoActIn
-//   shipper          Int
-//   consignee        Int
-//   user             User         @relation(fields: [user_id], references: [id])
-//   user_id          BigInt // Внешний ключ для связи с User
-// }
+  cargoIn CargoIn[] // Связь один-ко-многим с CargoIn
+}
+
+// Таблица прихода груза. Наименования груза, вес брутто, вес брутто остаток, приемный акт, склад, тип хранения (открытое, закрытое)
+model CargoIn {
+  id                 BigInt     @id @default(autoincrement())
+  cargo              Cargo      @relation(fields: [cargo_id], references: [id])
+  cargo_id           BigInt // Внешний ключ для связи с Cargo
+  weight_brutto      Int
+  weight_brutto_rest Int
+  cargoActIn         CargoActIn @relation(fields: [cargo_act_in_id], references: [id])
+  cargo_act_in_id    BigInt // Внешний ключ для связи с CargoActIn
+  warehouse          Int
+  storage_type_id    Int
+  wagon              Wagon      @relation(fields: [wagon_id], references: [id])
+  wagon_id           BigInt // Внешний ключ для связи с Wagon
+  user               User       @relation(fields: [user_id], references: [id])
+  user_id            String // Внешний ключ для связи с User
+}
+
+// Морские рейсы
+model VesselVoyage {
+  id                       Int      @id @default(autoincrement())
+  estimated_date_departure DateTime @db.Date
+  vessel                   Vessel   @relation(fields: [vessel_id], references: [id])
+  vessel_id                Int // Внешний ключ для связи с Vessel
+  user                     User     @relation(fields: [user_id], references: [id])
+  user_id                  String // Внешний ключ для связи с User
+
+  cargoLoad CargoLoad[] // Связь один-ко-многим с CargoLoad
+}
+
+// Справочник судов
+model Vessel {
+  id          Int    @id @default(autoincrement())
+  vessel_name String
+  user        User   @relation(fields: [user_id], references: [id])
+  user_id     String // Внешний ключ для связи с User
+
+  voyages VesselVoyage[] // Связь один-ко-многим с VesselVoyage
+}
+
+// Отгрузка груза на суда. Дата погрузки, номер рейса, вес брутто, приемный акт, отправитель, получатель
+model CargoLoad {
+  id               Int          @id @default(autoincrement())
+  load_date        DateTime     @db.Date
+  vesselVoyage     VesselVoyage @relation(fields: [vessel_voyage_id], references: [id])
+  vessel_voyage_id Int // Внешний ключ для связи с VesselVoyage
+  weight_brutto    Int
+  cargoActIn       CargoActIn   @relation(fields: [cargo_act_in_id], references: [id])
+  cargo_act_in_id  BigInt // Внешний ключ для связи с CargoActIn
+  shipper          Int
+  consignee        Int
+  user             User         @relation(fields: [user_id], references: [id])
+  user_id          String // Внешний ключ для связи с User
+}

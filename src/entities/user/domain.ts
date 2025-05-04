@@ -4,6 +4,7 @@ import { UserProfileId } from "@/kernel/ids";
 export type UserEntity = {
   id: UserId;
   login: string;
+  passwordHash: string;
   salt: string;
   role: string;
   created_at: Date;
