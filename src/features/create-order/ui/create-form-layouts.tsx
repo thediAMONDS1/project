@@ -1,4 +1,4 @@
-import { CardContent } from "@/shared/ui/card";
+import { Card, CardContent } from "@/shared/ui/card";
 import React from "react";
 
 export function CreateFormLayout({
@@ -13,14 +13,20 @@ export function CreateFormLayout({
   action: (formData: FormData) => void;
 }) {
   return (
-    <>
-      <CardContent>
-        <form action={action} className="space-y-4">
-          {fields}
-          {error}
-          {actions}
-        </form>
-      </CardContent>
-    </>
+    <CardContent className="p-2 flex flex-col justify-between space-y-6">
+      <div className="text-center">
+        <h2 className="text-2xl font-semibold text-primary">Create form</h2>
+        <p className="text-muted-foreground text-sm">
+          Please fill in all required fields
+        </p>
+      </div>
+      <form action={action} className="space-y-6">
+        <div className="space-y-4">{fields}</div>
+        {error && (
+          <div className="text-red-500 text-sm font-medium">{error}</div>
+        )}
+        <div className="pt-6 border-t border-border">{actions}</div>
+      </form>
+    </CardContent>
   );
 }

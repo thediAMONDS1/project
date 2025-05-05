@@ -1,15 +1,16 @@
 import TableLayout from "../ui/table-form-layout";
-import { columns } from "../columns/cargo-act-in";
-import { getCargoActInData } from "@/entities/cargo-act-in/repositories/cargo-act-in";
+import { columns } from "../columns/cargo-load";
+import { getCargoLoadData } from "@/entities/cargo-load/repositories/cargo-load";
 import { getCurrentUser } from "@/entities/user/services/get-current-user";
 
-export default async function CargoActInForm() {
-  const data = await getCargoActInData();
+export default async function CargoLoadForm() {
+  const data = await getCargoLoadData();
   const user = await getCurrentUser();
+  console.log(user);
   return (
     <TableLayout
       role={user?.role || ""}
-      title={"Cargos act in"}
+      title={"Cargos load"}
       formcomponent={undefined}
       columns={columns}
       data={data}

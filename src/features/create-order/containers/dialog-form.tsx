@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/shared/ui/dialog";
-import { ScrollArea } from "@/shared/ui/scroll-area";
+
 import {
   createOrderAction,
   CreateOrderFormState,
@@ -35,20 +35,18 @@ export function CreateOrderButton() {
           Create Order
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create Order</DialogTitle>
+          <DialogTitle />
         </DialogHeader>
-        <ScrollArea className="max-h-[60vh] pr-4 px-8">
-          <CreateFormLayout
-            action={action}
-            fields={<OrderFields {...formState} />}
-            actions={
-              <SubmitButton isPending={isPending}>Create Order</SubmitButton>
-            }
-            error={<ErrorMessage error={formState.errors?._errors} />}
-          />
-        </ScrollArea>
+        <CreateFormLayout
+          action={action}
+          fields={<OrderFields {...formState} />}
+          actions={
+            <SubmitButton isPending={isPending}>Create Order</SubmitButton>
+          }
+          error={<ErrorMessage error={formState.errors?._errors} />}
+        />
       </DialogContent>
     </Dialog>
   );

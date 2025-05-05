@@ -12,11 +12,13 @@ interface TableData {
 }
 
 export default function TableLayout({
+  role,
   title,
   formcomponent,
   columns,
   data,
 }: {
+  role: string;
   title: string;
   formcomponent: React.ReactNode;
   columns: ColumnDef<TableData>[];
@@ -24,8 +26,8 @@ export default function TableLayout({
 }) {
   return (
     <div className="flex pt-6">
-      <MenuLayout />
-      <div className="flex flex-col mx-96">
+      <MenuLayout role={role} />
+      <div className="flex flex-col mx-10 pl-10">
         <DataTable
           title={title}
           columns={columns}

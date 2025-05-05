@@ -21,10 +21,10 @@ import { Input } from "@/shared/ui/input";
 import { Button } from "@/shared/ui/button";
 import React, { useState } from "react";
 import { RowDetails } from "./row-details";
-import MenuLayout from "./menu-layout";
 
 interface DataTableProps<TData, TValue> {
   title: string;
+  titleIcon?: React.ElementType;
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   formcomponent?: React.ReactNode;

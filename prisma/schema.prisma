@@ -76,28 +76,27 @@ model Wagon {
 
 // Приемные акты. Прием груза оформляется приемным актом.
 model CargoActIn {
-  id           BigInt           @id @default(autoincrement())
-  act_in_no    Int
-  act_in_date  DateTime         @db.Date
-  status       CargoActInStatus @relation(fields: [statusId], references: [id])
-  statusId     BigInt // Внешний ключ для связи с CargoActInStatus
-  supplier_id  Int
-  rail_waybill Int
-  user         User             @relation(fields: [user_id], references: [id])
-  user_id      String // Внешний ключ для связи с User
+  id            BigInt           @id @default(autoincrement())
+  act_in_number Int
+  act_in_date   DateTime         @db.Date
+  status        CargoActInStatus @relation(fields: [statusId], references: [id])
+  statusId      BigInt // Внешний ключ для связи с CargoActInStatus
+  supplier_id   Int
+  rail_waybill  Int
+  user          User             @relation(fields: [user_id], references: [id])
+  user_id       String // Внешний ключ для связи с User
 
   cargoIn   CargoIn[] // Связь один-ко-многим с CargoIn
   CargoLoad CargoLoad[]
 
-  @@unique([act_in_no, act_in_date])
+  @@unique([act_in_number, act_in_date])
 }
 
 // Справочник. Статусы приемных актов.
 model CargoActInStatus {
-  id          BigInt @id @default(autoincrement())
+  id          BigInt       @id @default(autoincrement())
   status_name String
-
-  cargoActIn CargoActIn[] // Связь один-ко-многим с CargoActIn
+  cargoActIn  CargoActIn[] // Связь один-ко-многим с CargoActIn
 }
 
 // Справочник. Груз.

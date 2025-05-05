@@ -38,7 +38,7 @@ export function OrderFields({
     error?: string,
     defaultValue?: string | number
   ) => (
-    <div className="space-y-2">
+    <div className="space-y-2 w-full">
       <Label htmlFor={id}>{label}</Label>
       <Input
         id={id}
@@ -46,7 +46,7 @@ export function OrderFields({
         type={type}
         placeholder={placeholder}
         defaultValue={defaultValue?.toString()}
-        className={error ? "border-destructive/50" : ""}
+        className={`w-full px-4 py-4 ${error ? "border-destructive/50" : ""}`}
       />
       {error && <div className="text-xs text-destructive">{error}</div>}
     </div>
