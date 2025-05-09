@@ -22,10 +22,11 @@ export async function getCargoActInStatusData() {
   const cargos_act_in_status = await prisma.cargoActInStatus.findMany({
     select: {
       id: true,
+      status_name: true,
     },
   });
 
-  return cargos_act_in_status.map((cargo_act_in_status: any) => ({
+  return cargos_act_in_status.map((cargo_act_in_status) => ({
     ...cargo_act_in_status,
   }));
 }

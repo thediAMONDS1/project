@@ -21,15 +21,8 @@ export async function saveVessel(
 }
 
 export async function getVesselData() {
-  const vessels = await prisma.vessel.findMany({
-    select: {
-      id: true,
-    },
-  });
-
-  return vessels.map((vessel: any) => ({
-    ...vessel,
-  }));
+  const vessels = await prisma.vessel.findMany();
+  return vessels;
 }
 
 export const vesselRepository = {

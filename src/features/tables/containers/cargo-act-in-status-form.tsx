@@ -6,11 +6,12 @@ import { getCurrentUser } from "@/entities/user/services/get-current-user";
 export default async function CargoActInStatusForm() {
   const data = await getCargoActInStatusData();
   const user = await getCurrentUser();
+
   return (
     <TableLayout
       role={user?.role || ""}
       title={"Cargos act in status"}
-      formcomponent={undefined}
+      form_component={undefined}
       columns={columns}
       data={data}
     />

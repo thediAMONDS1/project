@@ -15,7 +15,7 @@ async function hashPassword(
   };
 }
 
-async function comparePasswrod({
+async function comparePassword({
   password,
   hash,
   salt,
@@ -27,4 +27,4 @@ async function comparePasswrod({
   return hash === (await hashPassword(password, salt)).hash;
 }
 
-export const passwordService = { comparePasswrod, hashPassword };
+export const passwordService = { comparePassword, hashPassword };

@@ -31,7 +31,7 @@ export const Sidebar = () => {
         </Link>
       </div>
       <div className="bg-white/5 rounded-lg p-4">
-        <Link href="/my-orders">
+        <Link href="/">
           <Button
             variant="outline"
             className="flex items-center gap-3 p-5 w-full"

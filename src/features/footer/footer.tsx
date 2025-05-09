@@ -3,8 +3,9 @@ import { Facebook, Instagram, Twitter, Github } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="w-full  text-white">
-      <div className="container mx-auto px-4 py-12">
+    <footer className="w-full text-white mt-auto">
+      <div className="container mx-auto px-4">
+        <div className="mt-12 border-t border-gray-800 pt-8"></div>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           <div>
             <h3 className="mb-4 text-lg font-bold">Company</h3>
@@ -94,16 +95,11 @@ export function Footer() {
             <h3 className="mb-4 text-lg font-bold">Contact</h3>
             <address className="not-italic text-gray-400">
               <p>123 Business Street</p>
-              <p>San Francisco, CA 94103</p>
+              <p>Saint Petersburg</p>
               <p className="mt-2">info@example.com</p>
-              <p>+1 (555) 123-4567</p>
+              <p>+7 (953) 2042456</p>
             </address>
           </div>
-        </div>
-        <div className="mt-12 border-t border-gray-800 pt-8">
-          <p className="text-center text-sm text-gray-400">
-            © {new Date().getFullYear()} Your Company. All rights reserved.
-          </p>
         </div>
       </div>
     </footer>

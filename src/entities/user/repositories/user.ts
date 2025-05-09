@@ -5,13 +5,15 @@ import { left, right } from "@/shared/lib/either";
 
 export async function saveUser(
   user: UserEntity,
-  profile: UserProfileEntity
+  profile: UserProfileEntity,
+  passwordHash: string,
+  salt: string
 ): Promise<UserEntity> {
   const createdUser = await prisma.user.create({
     data: {
       login: user.login,
-      password_hash: user.passwordHash,
-      salt: user.salt,
+      password_hash: passwordHash,
+      salt: salt,
       role: user.role || "user",
       created_at: user.created_at || new Date(),
       profile: {
@@ -29,8 +31,6 @@ export async function saveUser(
   return {
     id: createdUser.id,
     login: createdUser.login,
-    passwordHash: createdUser.password_hash,
-    salt: createdUser.salt,
     role: createdUser.role,
     created_at: createdUser.created_at,
   };
@@ -100,4 +100,15 @@ export const editUser = async ({
   return right(updatedProfile);
 };
 
-export const userRepository = { saveUser, getUser, getUserData, editUser };
+export async function getUserCount() {
+  const count = await prisma.user.count();
+  return count;
+}
+
+export const userRepository = {
+  saveUser,
+  getUser,
+  getUserData,
+  editUser,
+  getUserCount,
+};

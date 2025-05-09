@@ -11,15 +11,8 @@ export function saveWagon(wagon: Prisma.WagonCreateInput) {
   });
 }
 export async function getWagonData() {
-  const wagons = await prisma.wagon.findMany({
-    select: {
-      id: true,
-    },
-  });
-
-  return wagons.map((wagon: any) => ({
-    ...wagon,
-  }));
+  const wagons = await prisma.wagon.findMany();
+  return wagons;
 }
 
 export const wagonRepository = {

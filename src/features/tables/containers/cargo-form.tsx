@@ -11,7 +11,7 @@ export default async function CargoForm() {
     <TableLayout
       role={user?.role || ""}
       title={"Cargos"}
-      formcomponent={undefined}
+      form_component={undefined}
       columns={columns}
       data={data}
     />

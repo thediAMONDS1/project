@@ -6,11 +6,12 @@ import { getCurrentUser } from "@/entities/user/services/get-current-user";
 export default async function UsersForm() {
   const data = await getUserData();
   const user = await getCurrentUser();
+
   return (
     <TableLayout
       role={user?.role || ""}
       title={"Users"}
-      formcomponent={undefined}
+      form_component={undefined}
       columns={columns}
       data={data}
     />

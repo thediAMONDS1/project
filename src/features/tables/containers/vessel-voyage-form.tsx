@@ -7,12 +7,12 @@ import { getVesselVoyageData } from "@/entities/vessel-voyage/repositories/vesse
 export default async function VesselVoyageForm() {
   const data = await getVesselVoyageData();
   const user = await getCurrentUser();
-  console.log(user);
+
   return (
     <TableLayout
       role={user?.role || ""}
       title={"Vessels voyage"}
-      formcomponent={undefined}
+      form_component={undefined}
       columns={columns}
       data={data}
     />

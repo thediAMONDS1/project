@@ -16,7 +16,7 @@ export default async function MyOrdersForm() {
     <TableLayout
       role={user?.role || ""}
       title={"My orders"}
-      formcomponent={<CreateOrderButton />}
+      form_component={<CreateOrderButton />}
       columns={columns}
       data={data}
     />

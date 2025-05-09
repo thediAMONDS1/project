@@ -6,12 +6,11 @@ import { getCurrentUser } from "@/entities/user/services/get-current-user";
 export default async function CargoLoadForm() {
   const data = await getCargoLoadData();
   const user = await getCurrentUser();
-  console.log(user);
   return (
     <TableLayout
       role={user?.role || ""}
       title={"Cargos load"}
-      formcomponent={undefined}
+      form_component={undefined}
       columns={columns}
       data={data}
     />

@@ -48,7 +48,7 @@ export const signInAction = async (
   if (verifyUserResult.type === "right") {
     await sessionService.addSession(verifyUserResult.value);
 
-    redirect("/my-orders");
+    redirect("/tables/my-orders");
   }
   const errors = {
     "wrong-login-or-password": "Incorrect login or password",
