@@ -23,20 +23,18 @@ import React, { useState } from "react";
 import { RowDetails } from "./row-details";
 import { tables } from "./menu-items";
 
-interface DataTableProps<TData, TValue> {
-  title: string;
-  titleIcon?: React.ElementType;
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-  formcomponent?: React.ReactNode;
-}
-
 export function DataTable<TData, TValue>({
   title,
   columns,
   data,
   formcomponent,
-}: DataTableProps<TData, TValue>) {
+}: {
+  title: string;
+  titleIcon?: React.ElementType;
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+  formcomponent?: React.ReactNode;
+}) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnVisibility, setColumnVisibility] = useState({});
@@ -117,6 +115,12 @@ export function DataTable<TData, TValue>({
                   ))}
                   <TableCell>
                     <div className="flex justify-end space-x-2">
+                      <Button
+                        variant="outline"
+                        onClick={() => setSelectedRow(row.original)}
+                      >
+                        edit
+                      </Button>
                       <Button
                         variant="outline"
                         onClick={() => setSelectedRow(row.original)}
