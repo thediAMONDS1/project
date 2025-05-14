@@ -2,6 +2,7 @@ import TableLayout from "../ui/table-form-layout";
 import { columns } from "../columns/wagon";
 import { getWagonData } from "@/entities/wagon/repositories/wagon";
 import { getCurrentUser } from "@/entities/user/services/get-current-user";
+import { CreateWagonButton } from "@/features/dialogs/wagon/containers/dialog-form";
 
 export default async function WagonForm() {
   const data = await getWagonData();
@@ -10,7 +11,7 @@ export default async function WagonForm() {
     <TableLayout
       role={user?.role || ""}
       title={"Wagons"}
-      form_component={undefined}
+      form_component={<CreateWagonButton />}
       columns={columns}
       data={data}
     />

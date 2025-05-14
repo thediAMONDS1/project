@@ -2,12 +2,10 @@ import { prisma } from "@/shared/lib/db";
 import { Prisma } from "@prisma/client";
 
 export function saveCargo(cargo: Prisma.CargoCreateInput) {
-  return prisma.cargo.upsert({
-    where: {
-      id: cargo.id,
+  return prisma.cargo.create({
+    data: {
+      cargo_name: cargo.cargo_name,
     },
-    create: cargo,
-    update: cargo,
   });
 }
 export async function getCargoData() {

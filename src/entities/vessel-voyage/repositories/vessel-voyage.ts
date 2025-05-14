@@ -24,11 +24,24 @@ export async function getVesselVoyageData() {
   const vessels_voyage = await prisma.vesselVoyage.findMany({
     select: {
       id: true,
+      estimated_date_departure: true,
+      vessel_id: true,
+      user_id: true,
     },
   });
 
   return vessels_voyage.map((vessel_voyage: any) => ({
     ...vessel_voyage,
+    estimated_date_departure: vessel_voyage.estimated_date_departure
+      ? new Date(vessel_voyage.estimated_date_departure).toLocaleDateString(
+          "ru-RU",
+          {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          }
+        )
+      : null,
   }));
 }
 

@@ -16,7 +16,7 @@ export const createCargoIn = async ({
   weight_brutto_rest: number;
   cargo_act_in_id: number;
   warehouse: number;
-  storage_type_id: number; // 👈 было string — должно быть number, см. модель
+  storage_type_id: number;
   wagon_id: number;
   user_id: string;
 }) => {

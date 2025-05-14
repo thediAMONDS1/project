@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "db:migrate:dev": "npx prisma migrate dev",
-    "db:reset": "npx prisma migrate reset"
+    "db:reset": "npx prisma migrate reset",
+    "git:reset": "bash -c 'git fetch && git reset --hard origin/$(git branch --show-current)'"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

@@ -24,11 +24,25 @@ export async function getCargoLoadData() {
   const cargos = await prisma.cargoLoad.findMany({
     select: {
       id: true,
+      load_date: true,
+      vessel_voyage_id: true,
+      weight_brutto: true,
+      cargo_act_in_id: true,
+      shipper: true,
+      consignee: true,
+      user_id: true,
     },
   });
 
   return cargos.map((cargo: any) => ({
     ...cargo,
+    load_date: cargo.load_date
+      ? new Date(cargo.load_date).toLocaleDateString("ru-RU", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        })
+      : null,
   }));
 }
 

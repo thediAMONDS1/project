@@ -17,12 +17,6 @@ export const tables = [
     roles: ["admin"],
   },
   {
-    name: "Orders",
-    href: "/my-orders",
-    icon: ClipboardList,
-    roles: ["admin", "manager", "user"],
-  },
-  {
     name: "Wagons",
     href: "/wagons",
     icon: Train,

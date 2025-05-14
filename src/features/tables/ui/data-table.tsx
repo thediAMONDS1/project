@@ -119,12 +119,6 @@ export function DataTable<TData, TValue>({
                         variant="outline"
                         onClick={() => setSelectedRow(row.original)}
                       >
-                        edit
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onClick={() => setSelectedRow(row.original)}
-                      >
                         show
                       </Button>
                       <Button className="ml-2 border-red-700" variant="outline">
@@ -168,7 +162,12 @@ export function DataTable<TData, TValue>({
         </Button>
       </div>
 
-      <RowDetails row={selectedRow} onClose={() => setSelectedRow(null)} />
+      <RowDetails
+        row={selectedRow}
+        onClose={() => setSelectedRow(null)}
+        title={title}
+        columns={columns}
+      />
     </>
   );
 }

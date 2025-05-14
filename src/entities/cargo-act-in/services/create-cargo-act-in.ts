@@ -2,9 +2,36 @@ import { left, right } from "@/shared/lib/either";
 import { cargoActInRepository } from "../repositories/cargo-act-in";
 
 export const createCargoActIn = async ({
-  cargo_act_in_name,
+  act_in_number,
+  act_in_date,
+  status_id,
+  supplier_id,
+  rail_waybill,
+  user_id,
 }: {
-  cargo_act_in_name: string;
+  act_in_number: number;
+  act_in_date: Date;
+  status_id: bigint;
+  supplier_id: number;
+  rail_waybill: number;
+  user_id: string;
 }) => {
-  return right(cargo_act_in_name);
+  const act = await cargoActInRepository.saveCargoActIn({
+    act_in_number,
+    act_in_date,
+    status: {
+      connect: {
+        id: status_id,
+      },
+    },
+    supplier_id,
+    rail_waybill,
+    user: {
+      connect: {
+        id: user_id,
+      },
+    },
+  });
+
+  return right(act);
 };

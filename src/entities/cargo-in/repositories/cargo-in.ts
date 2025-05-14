@@ -24,6 +24,14 @@ export async function getCargoInData() {
   const cargos_in = await prisma.cargoIn.findMany({
     select: {
       id: true,
+      cargo_id: true,
+      weight_brutto: true,
+      weight_brutto_rest: true,
+      cargo_act_in_id: true,
+      warehouse: true,
+      storage_type_id: true,
+      wagon_id: true,
+      user_id: true,
     },
   });
 
