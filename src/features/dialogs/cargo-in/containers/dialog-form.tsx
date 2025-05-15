@@ -15,12 +15,33 @@ import {
   CreateCargoInFormState,
 } from "../actions/create-cargo-in";
 import { useActionState } from "@/shared/lib/react";
-import { CreateFormLayout } from "../../ui/create-form-layouts";
+import { CreateFormLayout } from "../../create-form-layouts";
 import { ErrorMessage } from "@/shared/ui/alert-description";
 import { SubmitButton } from "@/shared/ui/submit-button";
 import { CargoInFields } from "../fields/cargo-in-fields";
 
-export function CreateCargoInButton() {
+type Cargo = {
+  id: bigint;
+  cargo_name: string;
+};
+type CargoActIn = {
+  id: bigint;
+  act_in_number: number;
+};
+type Wagon = {
+  id: bigint;
+  wagon_number: number;
+};
+
+export function CreateCargoInButton({
+  cargo,
+  wagon,
+  cargo_act_in,
+}: {
+  cargo: Cargo[];
+  wagon: Wagon[];
+  cargo_act_in: CargoActIn[];
+}) {
   const [open, setOpen] = useState(false);
 
   const [formState, action, isPending] = useActionState(
@@ -41,7 +62,14 @@ export function CreateCargoInButton() {
         </DialogHeader>
         <CreateFormLayout
           action={action}
-          fields={<CargoInFields {...formState} />}
+          fields={
+            <CargoInFields
+              {...formState}
+              cargo={cargo}
+              cargo_act_in={cargo_act_in}
+              wagon={wagon}
+            />
+          }
           actions={
             <SubmitButton isPending={isPending}>Create Cargo</SubmitButton>
           }

@@ -15,19 +15,24 @@ import {
   CreateCargoActInFormState,
 } from "../actions/create-cargo-act-in";
 import { useActionState } from "@/shared/lib/react";
-import { CreateFormLayout } from "../../ui/create-form-layouts";
+import { CreateFormLayout } from "../../create-form-layouts";
 import { ErrorMessage } from "@/shared/ui/alert-description";
 import { SubmitButton } from "@/shared/ui/submit-button";
 import { CargoActInFields } from "../fields/cargo-act-in-fields";
 
-export function CreateCargoActInButton() {
+type Status = {
+  id: bigint;
+  status_name: string;
+};
+
+export function CreateCargoActInButton({ status }: { status: Status[] }) {
   const [open, setOpen] = useState(false);
 
   const [formState, action, isPending] = useActionState(
     createCargoActInAction,
     {} as CreateCargoActInFormState
   );
-
+  console.log(status);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -42,7 +47,7 @@ export function CreateCargoActInButton() {
         </DialogHeader>
         <CreateFormLayout
           action={action}
-          fields={<CargoActInFields {...formState} />}
+          fields={<CargoActInFields {...formState} status={status} />}
           actions={
             <SubmitButton isPending={isPending}>Create Cargo Act</SubmitButton>
           }

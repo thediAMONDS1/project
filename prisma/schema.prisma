@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,135 +8,169 @@ datasource db {
 }
 
 // Основная информация о пользователе
-model User {
-  id            String       @id @default(cuid())
+model user {
+  id            String        @id @default(cuid())
   login         String
   password_hash String
   salt          String
-  role          String       @default("user")
-  created_at    DateTime     @default(now()) @db.Date
-  profile       UserProfile? // Связь один-к-одному с профилем
-  // settings      UserSettings? // Связь один-к-одному с настройками
+  role          String        @default("user")
+  created_at    DateTime      @default(now()) @db.Date
+  profile       user_profile? // Связь один-к-одному с профилем
 
-  CargoIn      CargoIn[]
-  VesselVoyage VesselVoyage[]
-  Vessel       Vessel[]
-  CargoLoad    CargoLoad[]
-  CargoActIn   CargoActIn[]
+  cargo_in      cargo_in[]
+  vessel_voyage vessel_voyage[]
+  vessel        ref_vessel[]
+  cargo_load    cargo_load[]
+  cargo_act_in  cargo_act_in[]
+  ref_shipper   ref_shipper[]
+  ref_consignee ref_consignee[]
 }
 
 // Дополнительная информация о пользователе
-model UserProfile {
+model user_profile {
   id        String @id @default(cuid())
   phone     String
   email     String
   name      String
   last_name String
-  user_id   String @unique // Внешний ключ для связи с User
-  user      User   @relation(fields: [user_id], references: [id]) // Связь с User
+  user_id   String @unique
+  user      user   @relation(fields: [user_id], references: [id])
 }
 
-// // Настройки пользователя
-// model UserSettings {
-//   id       BigInt @id @default(autoincrement())
-//   theme    String @default("dark") // Цветовая тема (например, "light", "dark")
-//   language String @default("en") // Язык (например, "en", "ru")
-//   user_id  BigInt @unique // Внешний ключ для связи с User
-//   user     User   @relation(fields: [user_id], references: [id]) // Связь с User
-// }
-
-// Справочник. Вагон. Номер вагона, тип вагона (крытый, полувагон).
-model Wagon {
-  id           BigInt @id @default(autoincrement())
+// Справочник. Вагон. Номер вагона, тип вагона (крытый, полувагон)
+model ref_wagon {
+  id           BigInt     @id @default(autoincrement())
   wagon_number Int
   wagon_type   String
-
-  cargoIn CargoIn[] // Связь один-ко-многим с CargoIn
+  add_info     String
+  cargo_in     cargo_in[]
 }
 
-// Приемные акты. Прием груза оформляется приемным актом.
-model CargoActIn {
-  id            BigInt           @id @default(autoincrement())
-  act_in_number Int
-  act_in_date   DateTime         @db.Date
-  status        CargoActInStatus @relation(fields: [statusId], references: [id])
-  statusId      BigInt // Внешний ключ для связи с CargoActInStatus
-  supplier_id   Int
-  rail_waybill  Int
-  user          User             @relation(fields: [user_id], references: [id])
-  user_id       String // Внешний ключ для связи с User
+// Справочник. Статусы приемных актов
+model ref_cargo_act_in_status {
+  id           BigInt         @id @default(autoincrement())
+  status_name  String
+  cargo_act_in cargo_act_in[]
+}
 
-  cargoIn   CargoIn[] // Связь один-ко-многим с CargoIn
-  CargoLoad CargoLoad[]
+// Справочник. Груз
+model ref_cargo {
+  id         BigInt     @id @default(autoincrement())
+  cargo_name String
+  add_info   String
+  cargo_in   cargo_in[]
+}
+
+// Справочник. Суда
+model ref_vessel {
+  id          BigInt          @id @default(autoincrement())
+  vessel_name String
+  add_info    String
+  user_id     String
+  user        user            @relation(fields: [user_id], references: [id])
+  voyages     vessel_voyage[]
+}
+
+// Справочник. Склад
+model ref_warehouse {
+  id               BigInt     @id @default(autoincrement())
+  warehouse_number Int
+  warehouse_type   String
+  add_info         String
+  cargo_in         cargo_in[] // связь добавлена
+}
+
+// Справочник. Поставщик
+model ref_shipper {
+  id           BigInt         @id @default(autoincrement())
+  shipper_name String
+  add_info     String
+  contact      String
+  user_id      String
+  user         user           @relation(fields: [user_id], references: [id])
+  cargo_act_in cargo_act_in[]
+  cargo_load   cargo_load[]
+}
+
+// Справочник. Грузополучатель
+model ref_consignee {
+  id             BigInt         @id @default(autoincrement())
+  consignee_name String
+  add_info       String
+  contact        String
+  user_id        String
+  user           user           @relation(fields: [user_id], references: [id])
+  cargo_act_in   cargo_act_in[]
+  cargo_load     cargo_load[]
+}
+
+// Приемные акты. Прием груза оформляется приемным актом
+model cargo_act_in {
+  id            BigInt   @id @default(autoincrement())
+  act_in_number Int
+  act_in_date   DateTime @db.Date
+  status_id     BigInt
+  shipper_id    BigInt
+  consignee_id  BigInt
+  rail_waybill  Int
+  user_id       String
+
+  status    ref_cargo_act_in_status @relation(fields: [status_id], references: [id])
+  shipper   ref_shipper             @relation(fields: [shipper_id], references: [id])
+  consignee ref_consignee           @relation(fields: [consignee_id], references: [id])
+  user      user                    @relation(fields: [user_id], references: [id])
+
+  cargo_in   cargo_in[]
+  cargo_load cargo_load[]
 
   @@unique([act_in_number, act_in_date])
 }
 
-// Справочник. Статусы приемных актов.
-model CargoActInStatus {
-  id          BigInt       @id @default(autoincrement())
-  status_name String
-  cargoActIn  CargoActIn[] // Связь один-ко-многим с CargoActIn
-}
+// Таблица прихода груза
+model cargo_in {
+  id                  BigInt @id @default(autoincrement())
+  cargo_id            BigInt
+  cargo_act_in_id     BigInt
+  warehouse_id        BigInt
+  wagon_id            BigInt
+  user_id             String
+  weight_brutto_start Int
+  weight_brutto_rest  Int
 
-// Справочник. Груз.
-model Cargo {
-  id         BigInt @id @default(autoincrement())
-  cargo_name String
-
-  cargoIn CargoIn[] // Связь один-ко-многим с CargoIn
-}
-
-// Таблица прихода груза. Наименования груза, вес брутто, вес брутто остаток, приемный акт, склад, тип хранения (открытое, закрытое)
-model CargoIn {
-  id                 BigInt     @id @default(autoincrement())
-  cargo              Cargo      @relation(fields: [cargo_id], references: [id])
-  cargo_id           BigInt // Внешний ключ для связи с Cargo
-  weight_brutto      Int
-  weight_brutto_rest Int
-  cargoActIn         CargoActIn @relation(fields: [cargo_act_in_id], references: [id])
-  cargo_act_in_id    BigInt // Внешний ключ для связи с CargoActIn
-  warehouse          Int
-  storage_type_id    Int
-  wagon              Wagon      @relation(fields: [wagon_id], references: [id])
-  wagon_id           BigInt // Внешний ключ для связи с Wagon
-  user               User       @relation(fields: [user_id], references: [id])
-  user_id            String // Внешний ключ для связи с User
+  cargo        ref_cargo     @relation(fields: [cargo_id], references: [id])
+  cargo_act_in cargo_act_in  @relation(fields: [cargo_act_in_id], references: [id])
+  wagon        ref_wagon     @relation(fields: [wagon_id], references: [id])
+  user         user          @relation(fields: [user_id], references: [id])
+  warehouse    ref_warehouse @relation(fields: [warehouse_id], references: [id])
 }
 
 // Морские рейсы
-model VesselVoyage {
-  id                       Int      @id @default(autoincrement())
+model vessel_voyage {
+  id                       BigInt   @id @default(autoincrement())
   estimated_date_departure DateTime @db.Date
-  vessel                   Vessel   @relation(fields: [vessel_id], references: [id])
-  vessel_id                Int // Внешний ключ для связи с Vessel
-  user                     User     @relation(fields: [user_id], references: [id])
-  user_id                  String // Внешний ключ для связи с User
+  vessel_id                BigInt
+  user_id                  String
 
-  cargoLoad CargoLoad[] // Связь один-ко-многим с CargoLoad
+  vessel     ref_vessel   @relation(fields: [vessel_id], references: [id])
+  user       user         @relation(fields: [user_id], references: [id])
+  cargo_load cargo_load[]
 }
 
-// Справочник судов
-model Vessel {
-  id          Int    @id @default(autoincrement())
-  vessel_name String
-  user        User   @relation(fields: [user_id], references: [id])
-  user_id     String // Внешний ключ для связи с User
-
-  voyages VesselVoyage[] // Связь один-ко-многим с VesselVoyage
-}
-
-// Отгрузка груза на суда. Дата погрузки, номер рейса, вес брутто, приемный акт, отправитель, получатель
-model CargoLoad {
-  id               Int          @id @default(autoincrement())
-  load_date        DateTime     @db.Date
-  vesselVoyage     VesselVoyage @relation(fields: [vessel_voyage_id], references: [id])
-  vessel_voyage_id Int // Внешний ключ для связи с VesselVoyage
+// Отгрузка груза на суда
+model cargo_load {
+  id               Int      @id @default(autoincrement())
+  load_date        DateTime @db.Date
+  vessel_voyage_id BigInt
+  cargo_act_in_id  BigInt
+  user_id          String
   weight_brutto    Int
-  cargoActIn       CargoActIn   @relation(fields: [cargo_act_in_id], references: [id])
-  cargo_act_in_id  BigInt // Внешний ключ для связи с CargoActIn
-  shipper          Int
-  consignee        Int
-  user             User         @relation(fields: [user_id], references: [id])
-  user_id          String // Внешний ключ для связи с User
+  shipper_id       BigInt
+  consignee_id     BigInt
+
+  vessel_voyage vessel_voyage @relation(fields: [vessel_voyage_id], references: [id])
+  cargo_act_in  cargo_act_in  @relation(fields: [cargo_act_in_id], references: [id])
+  user          user          @relation(fields: [user_id], references: [id])
+
+  shipper   ref_shipper   @relation(fields: [shipper_id], references: [id])
+  consignee ref_consignee @relation(fields: [consignee_id], references: [id])
 }

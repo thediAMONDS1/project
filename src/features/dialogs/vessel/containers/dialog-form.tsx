@@ -15,7 +15,7 @@ import {
   CreateVesselFormState,
 } from "../actions/create-vessel"; // обновлён импорт
 import { useActionState } from "@/shared/lib/react";
-import { CreateFormLayout } from "../../ui/create-form-layouts";
+import { CreateFormLayout } from "../../create-form-layouts";
 import { ErrorMessage } from "@/shared/ui/alert-description";
 import { SubmitButton } from "@/shared/ui/submit-button";
 import { VesselFields } from "../fields/vessel-fields"; // обновлён импорт

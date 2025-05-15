@@ -16,12 +16,26 @@ import {
   CreateCargoLoadFormState,
 } from "../actions/create-cargo-load";
 import { useActionState } from "@/shared/lib/react";
-import { CreateFormLayout } from "../../ui/create-form-layouts";
+import { CreateFormLayout } from "../../create-form-layouts";
 import { ErrorMessage } from "@/shared/ui/alert-description";
 import { SubmitButton } from "@/shared/ui/submit-button";
 import { CargoLoadFields } from "../fields/cargo-load-fields";
 
-export function CreateCargoLoadButton() {
+type CargoActIn = {
+  id: bigint;
+  act_in_number: number;
+};
+type VesselVoyage = {
+  id: bigint;
+};
+
+export function CreateCargoLoadButton({
+  vessel_voyage,
+  cargo_act_in,
+}: {
+  vessel_voyage: VesselVoyage[];
+  cargo_act_in: CargoActIn[];
+}) {
   const [open, setOpen] = useState(false);
 
   const [formState, action, isPending] = useActionState(
@@ -43,7 +57,13 @@ export function CreateCargoLoadButton() {
         </DialogHeader>
         <CreateFormLayout
           action={action}
-          fields={<CargoLoadFields {...formState} />}
+          fields={
+            <CargoLoadFields
+              {...formState}
+              cargo_act_in={cargo_act_in}
+              vessel_voyage={vessel_voyage}
+            />
+          }
           actions={
             <SubmitButton isPending={isPending}>Create Cargo Load</SubmitButton>
           }

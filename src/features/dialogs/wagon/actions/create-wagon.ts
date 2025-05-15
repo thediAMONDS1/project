@@ -1,7 +1,7 @@
 "use server";
 
-import { createWagon } from "@/entities/wagon/server";
-import { sessionService } from "@/entities/user/server";
+import { createWagon } from "@/entities/ref/wagon/server";
+import { sessionService } from "@/entities/ref/user/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -10,6 +10,7 @@ export type CreateWagonFormState = {
   errors?: {
     wagon_number?: string;
     wagon_type?: string;
+    add_info?: string;
     _errors?: string;
   };
 };
@@ -19,6 +20,12 @@ const formDataSchema = z.object({
     message: "Wagon number must be a positive integer",
   }),
   wagon_type: z.string().min(1, "Wagon type is required"),
+  add_info: z
+    .string()
+    .optional()
+    .transform((val) =>
+      val?.trim() === "" || val === undefined ? "No comments" : val
+    ),
 });
 
 export const createWagonAction = async (

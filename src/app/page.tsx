@@ -1,10 +1,10 @@
-import { sessionService } from "@/entities/user/server";
+import { sessionService } from "@/entities/ref/user/server";
 import { redirect } from "next/navigation";
 
 export default async function () {
   const session = await sessionService.verifySession();
   if (session) {
-    redirect("/tables/my-orders");
+    redirect("/tables/cargos-in");
   } else {
     redirect("/sign-in");
   }

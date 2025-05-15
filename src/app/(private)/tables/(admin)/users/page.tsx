@@ -1,4 +1,4 @@
-import UsersForm from "@/features/tables/containers/users-form";
+import UsersForm from "@/features/tables/ref/containers/users-form";
 
 export default function UsersPage() {
   return <UsersForm />;

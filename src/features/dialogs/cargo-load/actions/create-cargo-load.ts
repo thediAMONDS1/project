@@ -1,7 +1,7 @@
 "use server";
 
-import { createCargoLoad } from "@/entities/cargo-load/server";
-import { sessionService } from "@/entities/user/server";
+import { createCargoLoad } from "@/entities/main/cargo-load/server";
+import { sessionService } from "@/entities/ref/user/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -19,6 +19,12 @@ const formDataSchema = z.object({
   cargo_act_in_id: z.coerce.bigint().positive(),
   shipper: z.coerce.number().int().positive(),
   consignee: z.coerce.number().int().positive(),
+  add_info: z
+    .string()
+    .optional()
+    .transform((val) =>
+      val?.trim() === "" || val === undefined ? "No comments" : val
+    ),
 });
 
 export const createCargoLoadAction = async (

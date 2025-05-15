@@ -15,12 +15,16 @@ import {
   CreateVesselVoyageFormState,
 } from "../actions/create-vessel-voyage";
 import { useActionState } from "@/shared/lib/react";
-import { CreateFormLayout } from "../../ui/create-form-layouts";
+import { CreateFormLayout } from "../../create-form-layouts";
 import { ErrorMessage } from "@/shared/ui/alert-description";
 import { SubmitButton } from "@/shared/ui/submit-button";
 import { VesselVoyageFields } from "../fields/vessel-voyage-fields";
+type Vessel = {
+  id: bigint;
+  vessel_name: string;
+};
 
-export function CreateVesselVoyageButton() {
+export function CreateVesselVoyageButton({ vessel }: { vessel: Vessel[] }) {
   const [open, setOpen] = useState(false);
 
   const [formState, action, isPending] = useActionState(
@@ -42,7 +46,7 @@ export function CreateVesselVoyageButton() {
         </DialogHeader>
         <CreateFormLayout
           action={action}
-          fields={<VesselVoyageFields {...formState} />}
+          fields={<VesselVoyageFields {...formState} vessel={vessel} />}
           actions={
             <SubmitButton isPending={isPending}>Create Voyage</SubmitButton>
           }

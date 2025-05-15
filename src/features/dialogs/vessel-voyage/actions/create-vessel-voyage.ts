@@ -1,7 +1,7 @@
 "use server";
 
-import { createVesselVoyage } from "@/entities/vessel-voyage/server";
-import { sessionService } from "@/entities/user/server";
+import { createVesselVoyage } from "@/entities/main/vessel-voyage/server";
+import { sessionService } from "@/entities/ref/user/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -15,6 +15,12 @@ export type CreateVesselVoyageFormState = {
 const formDataSchema = z.object({
   estimated_date_departure: z.coerce.date(),
   vessel_id: z.coerce.number().int().positive(),
+  add_info: z
+    .string()
+    .optional()
+    .transform((val) =>
+      val?.trim() === "" || val === undefined ? "No comments" : val
+    ),
 });
 
 export const createVesselVoyageAction = async (

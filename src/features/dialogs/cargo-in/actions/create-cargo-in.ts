@@ -1,7 +1,7 @@
 "use server";
 
-import { createCargoIn } from "@/entities/cargo-in/server";
-import { sessionService } from "@/entities/user/server";
+import { createCargoIn } from "@/entities/main/cargo-in/server";
+import { sessionService } from "@/entities/ref/user/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -11,6 +11,7 @@ export type CreateCargoInFormState = {
     _errors?: string;
   };
 };
+
 const formDataSchema = z.object({
   cargo_id: z.coerce.number().int().positive(),
   weight_brutto: z.coerce.number().int().positive(),
@@ -19,6 +20,12 @@ const formDataSchema = z.object({
   warehouse: z.coerce.number().int(),
   storage_type_id: z.coerce.number().int(),
   wagon_id: z.coerce.number().int().positive(),
+  add_info: z
+    .string()
+    .optional()
+    .transform((val) =>
+      val?.trim() === "" || val === undefined ? "No comments" : val
+    ),
 });
 
 export const createCargoInAction = async (
@@ -52,6 +59,9 @@ export const createCargoInAction = async (
     ...result.data,
     user_id: session.id,
   });
+  if (createResult.type === "right") {
+    redirect("/tables/cargos-in");
+  }
 
   return {
     formData,

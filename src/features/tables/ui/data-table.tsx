@@ -19,30 +19,108 @@ import {
 } from "@tanstack/react-table";
 import { Input } from "@/shared/ui/input";
 import { Button } from "@/shared/ui/button";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { RowDetails } from "./row-details";
-import { tables } from "./menu-items";
+import { referenceTables, tables } from "./menu-items";
 
 export function DataTable<TData, TValue>({
   title,
   columns,
   data,
   formcomponent,
+  status,
+  cargo,
+  cargo_act_in,
+  wagon,
+  vessel,
 }: {
   title: string;
   titleIcon?: React.ElementType;
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   formcomponent?: React.ReactNode;
+  status?: { id: bigint; status_name: string }[];
+  cargo?: { id: bigint; cargo_name: string }[];
+  cargo_act_in?: { id: bigint; act_in_number: number }[];
+  wagon?: { id: bigint; wagon_number: number }[];
+  vessel?: { id: bigint; vessel_name: string }[];
 }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnVisibility, setColumnVisibility] = useState({});
   const [selectedRow, setSelectedRow] = useState<TData | null>(null);
 
+  const enhancedColumns = useMemo(() => {
+    return columns.map((col) => {
+      if ("accessorKey" in col) {
+        switch (col.accessorKey) {
+          case "status_id":
+            return {
+              ...col,
+              header: "Status",
+              cell: ({ row }: any) => {
+                const found = status?.find(
+                  (s) => s.id === row.original.status_id
+                );
+                return found ? found.status_name : "—";
+              },
+            };
+          case "cargo_id":
+            return {
+              ...col,
+              header: "Cargo",
+              cell: ({ row }: any) => {
+                const found = cargo?.find(
+                  (c) => c.id === row.original.cargo_id
+                );
+                return found ? found.cargo_name : "—";
+              },
+            };
+          case "cargo_act_in_id":
+            return {
+              ...col,
+              header: "Cargo Act In",
+              cell: ({ row }: any) => {
+                const found = cargo_act_in?.find(
+                  (c) => c.id === row.original.cargo_act_in_id
+                );
+                return found ? found.act_in_number : "—";
+              },
+            };
+          case "wagon_id":
+            return {
+              ...col,
+              header: "Wagon",
+              cell: ({ row }: any) => {
+                const found = wagon?.find(
+                  (w) => w.id === row.original.wagon_id
+                );
+                return found ? found.wagon_number : "—";
+              },
+            };
+          case "vessel_id":
+            return {
+              ...col,
+              header: "Vessel",
+              cell: ({ row }: any) => {
+                const found = vessel?.find(
+                  (v) => v.id === row.original.vessel_id
+                );
+                return found ? found.vessel_name : "—";
+              },
+            };
+          default:
+            return col;
+        }
+      }
+      return col;
+    });
+  }, [columns, status, cargo, cargo_act_in, wagon, vessel]);
+
   const table = useReactTable({
     data,
-    columns,
+
+    columns: enhancedColumns,
     state: {
       sorting,
       globalFilter,
@@ -57,7 +135,9 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
   });
 
-  const fallbackTable = tables.find((t) => t.name === title);
+  const allTables = [...tables, ...referenceTables];
+  const fallbackTable = allTables.find((t) => t.name === title);
+
   const Icon = fallbackTable?.icon;
 
   return (
@@ -70,7 +150,7 @@ export function DataTable<TData, TValue>({
       </div>
       <div className="flex justify-between space-x-4 py-4 ">
         <Input
-          placeholder="Search..."
+          placeholder="Поиск..."
           value={globalFilter ?? ""}
           onChange={(e) => setGlobalFilter(e.target.value)}
           className="max-w-sm"
@@ -95,7 +175,7 @@ export function DataTable<TData, TValue>({
 
                 <TableHead>
                   <span className="flex justify-end text-sm text-gray-500">
-                    Actions
+                    Действия
                   </span>
                 </TableHead>
               </TableRow>
@@ -119,10 +199,10 @@ export function DataTable<TData, TValue>({
                         variant="outline"
                         onClick={() => setSelectedRow(row.original)}
                       >
-                        show
+                        детали
                       </Button>
                       <Button className="ml-2 border-red-700" variant="outline">
-                        delete
+                        удалить
                       </Button>
                     </div>
                   </TableCell>
@@ -134,7 +214,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length + 1}
                   className="h-24 text-center"
                 >
-                  No results.
+                  Без результатов.
                 </TableCell>
               </TableRow>
             )}
@@ -142,8 +222,8 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       <div className="flex justify-end pt-1 text-sm text-muted-foreground">
-        Showed {table.getRowModel().rows.length} of
-        {" " + table.options.data.length} rows
+        Показаны {table.getRowModel().rows.length} из
+        {" " + table.options.data.length} записей
       </div>
       <div className="flex items-center justify-end space-x-2 py-2">
         <Button

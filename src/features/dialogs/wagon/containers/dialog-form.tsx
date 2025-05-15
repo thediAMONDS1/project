@@ -15,7 +15,7 @@ import {
   CreateWagonFormState,
 } from "../actions/create-wagon";
 import { useActionState } from "@/shared/lib/react";
-import { CreateFormLayout } from "../../ui/create-form-layouts";
+import { CreateFormLayout } from "../../create-form-layouts";
 import { ErrorMessage } from "@/shared/ui/alert-description";
 import { SubmitButton } from "@/shared/ui/submit-button";
 import { WagonFields } from "../fields/wagon-fields";

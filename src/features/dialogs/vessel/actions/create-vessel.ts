@@ -1,10 +1,9 @@
-// Справочник судов
 "use server";
 
 import { z } from "zod";
 import { redirect } from "next/navigation";
-import { sessionService } from "@/entities/user/server";
-import { createVessel } from "@/entities/vessel/server";
+import { sessionService } from "@/entities/ref/user/server";
+import { createVessel } from "@/entities/ref/vessel/server";
 
 export type CreateVesselFormState = {
   formData: FormData;
@@ -16,6 +15,12 @@ export type CreateVesselFormState = {
 
 const formDataSchema = z.object({
   vessel_name: z.string().min(1, "Vessel name is required"),
+  add_info: z
+    .string()
+    .optional()
+    .transform((val) =>
+      val?.trim() === "" || val === undefined ? "No comments" : val
+    ),
 });
 
 export const createVesselAction = async (

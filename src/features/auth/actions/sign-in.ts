@@ -1,6 +1,6 @@
 "use server";
 
-import { sessionService, verifyUserPassword } from "@/entities/user/server";
+import { sessionService, verifyUserPassword } from "@/entities/ref/user/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -48,7 +48,7 @@ export const signInAction = async (
   if (verifyUserResult.type === "right") {
     await sessionService.addSession(verifyUserResult.value);
 
-    redirect("/tables/my-orders");
+    redirect("/tables/cargos-in");
   }
   const errors = {
     "wrong-login-or-password": "Incorrect login or password",

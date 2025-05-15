@@ -1,7 +1,7 @@
 "use server";
 
-import { createCargoActIn } from "@/entities/cargo-act-in/server";
-import { sessionService } from "@/entities/user/server";
+import { createCargoActIn } from "@/entities/main/cargo-act-in/server";
+import { sessionService } from "@/entities/ref/user/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -16,8 +16,15 @@ const formDataSchema = z.object({
   act_in_number: z.coerce.number().int().positive(),
   act_in_date: z.coerce.date(),
   status_id: z.coerce.bigint(),
-  supplier_id: z.coerce.number().int().positive(),
+  shipper_id: z.coerce.bigint(),
+  consignee_id: z.coerce.bigint(),
   rail_waybill: z.coerce.number().int().positive(),
+  add_info: z
+    .string()
+    .optional()
+    .transform((val) =>
+      val?.trim() === "" || val === undefined ? "No comments" : val
+    ),
 });
 
 export const createCargoActInAction = async (
@@ -55,9 +62,9 @@ export const createCargoActInAction = async (
     ...result.data,
     user_id: session.id,
   });
-  console.log(createResult);
+
   if (createResult.type === "right") {
-    redirect("/tables/cargo-act-in");
+    redirect("/tables/cargos-act-in");
   }
 
   return {

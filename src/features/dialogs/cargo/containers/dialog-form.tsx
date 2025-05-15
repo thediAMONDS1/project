@@ -15,7 +15,7 @@ import {
   CreateCargoFormState,
 } from "../actions/create-cargo";
 import { useActionState } from "@/shared/lib/react";
-import { CreateFormLayout } from "../../ui/create-form-layouts";
+import { CreateFormLayout } from "../../create-form-layouts";
 import { ErrorMessage } from "@/shared/ui/alert-description";
 import { SubmitButton } from "@/shared/ui/submit-button";
 import { CargoFields } from "../fields/cargo-fields";
