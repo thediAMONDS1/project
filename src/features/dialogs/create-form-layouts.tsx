@@ -14,12 +14,6 @@ export function CreateFormLayout({
 }) {
   return (
     <CardContent className="p-2 flex flex-col justify-between space-y-6">
-      <div className="text-center">
-        <h2 className="text-2xl font-semibold text-primary">Create form</h2>
-        <p className="text-muted-foreground text-sm">
-          Please fill in all required fields
-        </p>
-      </div>
       <form action={action} className="space-y-6">
         <div className="space-y-4">{fields}</div>
         {error && (

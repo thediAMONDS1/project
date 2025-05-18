@@ -8,9 +8,8 @@ export const createCargoLoad = async ({
   shipper_id,
   consignee_id,
   user_id,
-  add_info,
 }: {
-  vessel_voyage_id: number;
+  vessel_voyage_id: bigint;
   weight_brutto: number;
   cargo_act_in_id: bigint;
   shipper_id: bigint;
@@ -38,7 +37,6 @@ export const createCargoLoad = async ({
         id: user_id,
       },
     },
-    add_info,
   });
 
   return right(cargo_load);

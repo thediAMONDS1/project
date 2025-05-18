@@ -16,12 +16,12 @@ export type CreateConsigneeFormState = {
 };
 
 const formDataSchema = z.object({
-  consignee_name: z.string().min(1, "Consignee name is required"),
+  consignee_name: z.string().min(1, "Название грузополучателя обязательно"),
   add_info: z
     .string()
     .optional()
     .transform((val) =>
-      val?.trim() === "" || val === undefined ? "No comments" : val
+      val?.trim() === "" || val === undefined ? "Без комментариев" : val
     ),
   contact: z.string().default(""),
 });

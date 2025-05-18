@@ -22,8 +22,17 @@ export async function getConsigneeNames() {
   return consignees;
 }
 
+export async function deleteConsignee(id: number | bigint) {
+  const numericId = typeof id === "bigint" ? Number(id) : id;
+
+  return await prisma.ref_consignee.delete({
+    where: { id: numericId },
+  });
+}
+
 export const consigneeRepository = {
   saveConsignee,
   getConsigneeData,
   getConsigneeNames,
+  deleteConsignee,
 };

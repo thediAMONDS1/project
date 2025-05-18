@@ -17,14 +17,14 @@ export type CreateWagonFormState = {
 
 const formDataSchema = z.object({
   wagon_number: z.coerce.number().int().positive({
-    message: "Wagon number must be a positive integer",
+    message: "Номер вагона должен быть положительным целым числом",
   }),
-  wagon_type: z.string().min(1, "Wagon type is required"),
+  wagon_type: z.string().min(1, "Тип вагона обязателен"),
   add_info: z
     .string()
     .optional()
     .transform((val) =>
-      val?.trim() === "" || val === undefined ? "No comments" : val
+      val?.trim() === "" || val === undefined ? "Без комментариев" : val
     ),
 });
 

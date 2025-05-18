@@ -54,7 +54,6 @@ CREATE TABLE "ref_vessel" (
     "id" BIGSERIAL NOT NULL,
     "vessel_name" TEXT NOT NULL,
     "add_info" TEXT NOT NULL,
-    "user_id" TEXT NOT NULL,
 
     CONSTRAINT "ref_vessel_pkey" PRIMARY KEY ("id")
 );
@@ -75,7 +74,6 @@ CREATE TABLE "ref_shipper" (
     "shipper_name" TEXT NOT NULL,
     "add_info" TEXT NOT NULL,
     "contact" TEXT NOT NULL,
-    "user_id" TEXT NOT NULL,
 
     CONSTRAINT "ref_shipper_pkey" PRIMARY KEY ("id")
 );
@@ -86,7 +84,6 @@ CREATE TABLE "ref_consignee" (
     "consignee_name" TEXT NOT NULL,
     "add_info" TEXT NOT NULL,
     "contact" TEXT NOT NULL,
-    "user_id" TEXT NOT NULL,
 
     CONSTRAINT "ref_consignee_pkey" PRIMARY KEY ("id")
 );
@@ -151,15 +148,6 @@ CREATE UNIQUE INDEX "cargo_act_in_act_in_number_act_in_date_key" ON "cargo_act_i
 
 -- AddForeignKey
 ALTER TABLE "user_profile" ADD CONSTRAINT "user_profile_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ref_vessel" ADD CONSTRAINT "ref_vessel_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ref_shipper" ADD CONSTRAINT "ref_shipper_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ref_consignee" ADD CONSTRAINT "ref_consignee_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "cargo_act_in" ADD CONSTRAINT "cargo_act_in_status_id_fkey" FOREIGN KEY ("status_id") REFERENCES "ref_cargo_act_in_status"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

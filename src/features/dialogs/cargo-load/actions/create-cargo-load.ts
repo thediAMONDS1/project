@@ -14,16 +14,16 @@ export type CreateCargoLoadFormState = {
 
 const formDataSchema = z.object({
   load_date: z.coerce.date(),
-  vessel_voyage_id: z.coerce.number().int().positive(),
+  vessel_voyage_id: z.coerce.bigint().positive(),
   weight_brutto: z.coerce.number().int().positive(),
   cargo_act_in_id: z.coerce.bigint().positive(),
-  shipper: z.coerce.number().int().positive(),
-  consignee: z.coerce.number().int().positive(),
+  shipper_id: z.coerce.bigint().positive(),
+  consignee_id: z.coerce.bigint().positive(),
   add_info: z
     .string()
     .optional()
     .transform((val) =>
-      val?.trim() === "" || val === undefined ? "No comments" : val
+      val?.trim() === "" || val === undefined ? "Без комментариев" : val
     ),
 });
 

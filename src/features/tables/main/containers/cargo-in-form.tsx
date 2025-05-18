@@ -6,6 +6,7 @@ import { CreateCargoInButton } from "@/features/dialogs/cargo-in/containers/dial
 import { getCargoData } from "@/entities/ref/cargo/repositories/cargo";
 import { getCargoActInNumber } from "@/entities/main/cargo-act-in/repositories/cargo-act-in";
 import { getWagonNumber } from "@/entities/ref/wagon/repositories/wagon";
+import { getWarehouseNumber } from "@/entities/ref/warehouse/repositories/warehouse";
 
 export default async function CargoInForm() {
   const data = await getCargoInData();
@@ -14,6 +15,8 @@ export default async function CargoInForm() {
   const cargo = await getCargoData();
   const cargo_act_in = await getCargoActInNumber();
   const wagon = await getWagonNumber();
+  const warehouse = await getWarehouseNumber();
+
   return (
     <TableLayout
       role={user?.role || ""}
@@ -23,6 +26,7 @@ export default async function CargoInForm() {
           cargo={cargo}
           cargo_act_in={cargo_act_in}
           wagon={wagon}
+          warehouse={warehouse}
         />
       }
       columns={columns}
@@ -30,6 +34,7 @@ export default async function CargoInForm() {
       cargo={cargo}
       cargo_act_in={cargo_act_in}
       wagon={wagon}
+      warehouse={warehouse}
     />
   );
 }

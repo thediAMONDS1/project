@@ -22,8 +22,16 @@ export async function getWagonNumber() {
   return wagons;
 }
 
+export async function deleteWagon(id: number | bigint) {
+  const numericId = typeof id === "bigint" ? Number(id) : id;
+  return await prisma.ref_wagon.delete({
+    where: { id: numericId },
+  });
+}
+
 export const wagonRepository = {
   saveWagon,
   getWagonData,
   getWagonNumber,
+  deleteWagon,
 };

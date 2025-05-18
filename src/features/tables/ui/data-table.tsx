@@ -22,8 +22,10 @@ import { Button } from "@/shared/ui/button";
 import React, { useMemo, useState } from "react";
 import { RowDetails } from "./row-details";
 import { referenceTables, tables } from "./menu-items";
+import { ConfirmDialog } from "./confirm-dialog";
 
 export function DataTable<TData, TValue>({
+  role,
   title,
   columns,
   data,
@@ -33,7 +35,12 @@ export function DataTable<TData, TValue>({
   cargo_act_in,
   wagon,
   vessel,
+  shipper,
+  consignee,
+  warehouse,
+  onDelete,
 }: {
+  role: string;
   title: string;
   titleIcon?: React.ElementType;
   columns: ColumnDef<TData, TValue>[];
@@ -44,11 +51,45 @@ export function DataTable<TData, TValue>({
   cargo_act_in?: { id: bigint; act_in_number: number }[];
   wagon?: { id: bigint; wagon_number: number }[];
   vessel?: { id: bigint; vessel_name: string }[];
+  shipper?: { id: bigint; shipper_name: string }[];
+  consignee?: { id: bigint; consignee_name: string }[];
+  warehouse?: { id: bigint; warehouse_number: number }[];
+  onDelete?: (id: bigint, tableName: string) => void;
 }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnVisibility, setColumnVisibility] = useState({});
   const [selectedRow, setSelectedRow] = useState<TData | null>(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [rowToDelete, setRowToDelete] = useState<bigint | null>(null);
+
+  const handleDeleteClick = (id: bigint) => {
+    setRowToDelete(id);
+    setDeleteDialogOpen(true);
+  };
+  const deletePermissions: Record<string, string[]> = {
+    // Основные таблицы
+    "Отгрузка грузов": ["admin", "manager", "user"],
+    "Прием грузов": ["admin", "manager", "user"],
+    "Акты поступления грузов": ["admin", "manager", "user"],
+    "Рейсы судов": ["admin", "manager"],
+
+    // Справочники
+    Вагоны: ["admin"],
+    Судна: ["admin"],
+    Грузы: ["admin"],
+    "Статусы актов поступления": ["admin"],
+    Склады: ["admin"],
+    Поставщики: ["admin", "manager"],
+    Грузополучатели: ["admin", "manager"],
+  };
+
+  const confirmDelete = () => {
+    if (rowToDelete && onDelete) {
+      onDelete(rowToDelete, title);
+    }
+    setDeleteDialogOpen(false);
+  };
 
   const enhancedColumns = useMemo(() => {
     return columns.map((col) => {
@@ -57,7 +98,7 @@ export function DataTable<TData, TValue>({
           case "status_id":
             return {
               ...col,
-              header: "Status",
+              header: "Статус",
               cell: ({ row }: any) => {
                 const found = status?.find(
                   (s) => s.id === row.original.status_id
@@ -68,7 +109,7 @@ export function DataTable<TData, TValue>({
           case "cargo_id":
             return {
               ...col,
-              header: "Cargo",
+              header: "Груз",
               cell: ({ row }: any) => {
                 const found = cargo?.find(
                   (c) => c.id === row.original.cargo_id
@@ -79,7 +120,7 @@ export function DataTable<TData, TValue>({
           case "cargo_act_in_id":
             return {
               ...col,
-              header: "Cargo Act In",
+              header: "Акт поступления",
               cell: ({ row }: any) => {
                 const found = cargo_act_in?.find(
                   (c) => c.id === row.original.cargo_act_in_id
@@ -90,7 +131,7 @@ export function DataTable<TData, TValue>({
           case "wagon_id":
             return {
               ...col,
-              header: "Wagon",
+              header: "Вагон",
               cell: ({ row }: any) => {
                 const found = wagon?.find(
                   (w) => w.id === row.original.wagon_id
@@ -101,7 +142,7 @@ export function DataTable<TData, TValue>({
           case "vessel_id":
             return {
               ...col,
-              header: "Vessel",
+              header: "Судно",
               cell: ({ row }: any) => {
                 const found = vessel?.find(
                   (v) => v.id === row.original.vessel_id
@@ -109,17 +150,57 @@ export function DataTable<TData, TValue>({
                 return found ? found.vessel_name : "—";
               },
             };
+          case "shipper_id":
+            return {
+              ...col,
+              header: "Поставщик",
+              cell: ({ row }: any) => {
+                const found = shipper?.find(
+                  (s) => s.id === row.original.shipper_id
+                );
+                return found ? found.shipper_name : "—";
+              },
+            };
+          case "consignee_id":
+            return {
+              ...col,
+              header: "Грузополучатель",
+              cell: ({ row }: any) => {
+                const found = consignee?.find(
+                  (c) => c.id === row.original.consignee_id
+                );
+                return found ? found.consignee_name : "—";
+              },
+            };
+          case "warehouse":
+            return {
+              ...col,
+              header: "Склад",
+              cell: ({ row }: any) => {
+                return row.original.warehouse?.warehouse_number ?? "—";
+              },
+            };
+
           default:
             return col;
         }
       }
       return col;
     });
-  }, [columns, status, cargo, cargo_act_in, wagon, vessel]);
+  }, [
+    columns,
+    status,
+    cargo,
+    cargo_act_in,
+    wagon,
+    vessel,
+    shipper,
+    consignee,
+    warehouse,
+  ]);
 
   const table = useReactTable({
     data,
-
     columns: enhancedColumns,
     state: {
       sorting,
@@ -201,9 +282,19 @@ export function DataTable<TData, TValue>({
                       >
                         детали
                       </Button>
-                      <Button className="ml-2 border-red-700" variant="outline">
-                        удалить
-                      </Button>
+                      {deletePermissions[title]?.includes(role) && (
+                        <Button
+                          className="ml-2 border-red-700"
+                          variant="outline"
+                          onClick={() =>
+                            handleDeleteClick(
+                              (row.original as { id: bigint }).id
+                            )
+                          }
+                        >
+                          удалить
+                        </Button>
+                      )}
                     </div>
                   </TableCell>
                 </TableRow>
@@ -231,14 +322,14 @@ export function DataTable<TData, TValue>({
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          Previous
+          Назад
         </Button>
         <Button
           variant="outline"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          Next
+          Далее
         </Button>
       </div>
 
@@ -247,6 +338,12 @@ export function DataTable<TData, TValue>({
         onClose={() => setSelectedRow(null)}
         title={title}
         columns={columns}
+      />
+      <ConfirmDialog
+        open={deleteDialogOpen}
+        onClose={() => setDeleteDialogOpen(false)}
+        onConfirm={confirmDelete}
+        title={title}
       />
     </>
   );

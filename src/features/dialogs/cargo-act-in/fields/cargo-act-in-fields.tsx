@@ -13,123 +13,164 @@ type Status = {
   id: bigint;
   status_name: string;
 };
+type Shipper = {
+  id: bigint;
+  shipper_name: string;
+};
+type Consignee = {
+  id: bigint;
+  consignee_name: string;
+};
 
 export function CargoActInFields({
   errors,
   formData,
   status,
+  shipper,
+  consignee,
 }: {
   formData?: FormData;
   errors?: Record<string, string>;
   status: Status[];
+  shipper: Shipper[];
+  consignee: Consignee[];
 }) {
   const fieldIds = {
     act_in_number: useId(),
     act_in_date: useId(),
     status_id: useId(),
-    supplier_id: useId(),
+    shipper_id: useId(),
+    consignee_id: useId(),
     rail_waybill: useId(),
   };
 
-  const renderField = (
+  const selectOptions: Record<string, { id: bigint; name: string }[]> = {
+    status_id: status.map((s) => ({ id: s.id, name: s.status_name })),
+    shipper_id: shipper.map((s) => ({ id: s.id, name: s.shipper_name })),
+    consignee_id: consignee.map((c) => ({ id: c.id, name: c.consignee_name })),
+  };
+
+  const fieldConfigs = [
+    {
+      name: "act_in_number",
+      label: "Номер акта приёма",
+      placeholder: "Введите номер акта приёма",
+      type: "number",
+    },
+    {
+      name: "act_in_date",
+      label: "Дата акта приёма",
+      placeholder: "Введите дату акта приёма",
+      type: "date",
+    },
+    {
+      name: "status_id",
+      label: "Статус",
+      placeholder: "Выберите статус",
+      type: "select",
+    },
+    {
+      name: "shipper_id",
+      label: "Грузоотправитель",
+      placeholder: "Выберите грузоотправителя",
+      type: "select",
+    },
+    {
+      name: "consignee_id",
+      label: "Грузополучатель",
+      placeholder: "Выберите грузополучателя",
+      type: "select",
+    },
+    {
+      name: "rail_waybill",
+      label: "Железнодорожная накладная",
+      placeholder: "Введите номер накладной",
+      type: "number",
+    },
+  ];
+
+  const renderSelectField = (
+    label: string,
+    id: string,
+    name: string,
+    options: { id: bigint; name: string }[],
+    placeholder: string,
+    error?: string,
+    defaultValue?: string
+  ) => (
+    <div className="space-y-2 w-full" key={name}>
+      <Label htmlFor={id}>{label}</Label>
+      <Select name={name} defaultValue={defaultValue}>
+        <SelectTrigger
+          className={`w-full px-4 py-4 ${error ? "border-destructive/50" : ""}`}
+        >
+          <SelectValue placeholder={placeholder} />
+        </SelectTrigger>
+        <SelectContent>
+          {options.map((opt) => (
+            <SelectItem key={opt.id.toString()} value={opt.id.toString()}>
+              {opt.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      {error && <div className="text-xs text-destructive">{error}</div>}
+    </div>
+  );
+
+  const renderInputField = (
     label: string,
     id: string,
     name: string,
     placeholder: string,
     type: string,
     error?: string,
-    defaultValue?: string | number
-  ) => {
-    if (name === "status_id") {
-      return (
-        <div className="space-y-2 w-full">
-          <Label htmlFor={id}>{label}</Label>
-          <Select
-            name={name}
-            defaultValue={formData?.get(name)?.toString() ?? ""}
-          >
-            <SelectTrigger
-              className={`w-full px-4 py-4 ${
-                error ? "border-destructive/50" : ""
-              }`}
-            >
-              <SelectValue placeholder="Select status" />
-            </SelectTrigger>
-            <SelectContent>
-              {status.map((s) => (
-                <SelectItem key={s.id.toString()} value={s.id.toString()}>
-                  {s.status_name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {error && <div className="text-xs text-destructive">{error}</div>}
-        </div>
-      );
-    }
-
-    return (
-      <div className="space-y-2 w-full">
-        <Label htmlFor={id}>{label}</Label>
-        <Input
-          id={id}
-          name={name}
-          type={type}
-          placeholder={placeholder}
-          defaultValue={defaultValue?.toString()}
-          className={`w-full px-4 py-4 ${error ? "border-destructive/50" : ""}`}
-        />
-        {error && <div className="text-xs text-destructive">{error}</div>}
-      </div>
-    );
-  };
+    defaultValue?: string
+  ) => (
+    <div className="space-y-2 w-full" key={name}>
+      <Label htmlFor={id}>{label}</Label>
+      <Input
+        id={id}
+        name={name}
+        type={type}
+        placeholder={placeholder}
+        defaultValue={defaultValue}
+        className={`w-full px-4 py-4 ${error ? "border-destructive/50" : ""}`}
+      />
+      {error && <div className="text-xs text-destructive">{error}</div>}
+    </div>
+  );
 
   return (
     <>
-      {renderField(
-        "Act In Number",
-        fieldIds.act_in_number,
-        "act_in_number",
-        "Enter act in number",
-        "number",
-        errors?.act_in_number,
-        formData?.get("act_in_number")?.toString()
-      )}
-      {renderField(
-        "Act In Date",
-        fieldIds.act_in_date,
-        "act_in_date",
-        "Enter act in date",
-        "date",
-        errors?.act_in_date,
-        formData?.get("act_in_date")?.toString()
-      )}
-      {renderField(
-        "Status",
-        fieldIds.status_id,
-        "status_id",
-        "Select status",
-        "select",
-        errors?.status_id
-      )}
-      {renderField(
-        "Supplier ID",
-        fieldIds.supplier_id,
-        "supplier_id",
-        "Enter supplier ID",
-        "number",
-        errors?.supplier_id,
-        formData?.get("supplier_id")?.toString()
-      )}
-      {renderField(
-        "Rail Waybill",
-        fieldIds.rail_waybill,
-        "rail_waybill",
-        "Enter rail waybill",
-        "number",
-        errors?.rail_waybill,
-        formData?.get("rail_waybill")?.toString()
-      )}
+      {fieldConfigs.map(({ name, label, placeholder, type }) => {
+        const id = fieldIds[name as keyof typeof fieldIds];
+        const error = errors?.[name];
+        const defaultValue = formData?.get(name)?.toString() ?? "";
+
+        if (type === "select") {
+          const options = selectOptions[name] ?? [];
+          return renderSelectField(
+            label,
+            id,
+            name,
+            options,
+            placeholder,
+            error,
+            defaultValue
+          );
+        }
+
+        return renderInputField(
+          label,
+          id,
+          name,
+          placeholder,
+          type,
+          error,
+          defaultValue
+        );
+      })}
     </>
   );
 }

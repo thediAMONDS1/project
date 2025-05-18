@@ -45,8 +45,22 @@ export async function getCargoLoadData() {
       : null,
   }));
 }
+export async function updateCargoLoad(id: bigint, data: UpdateInput) {
+  return prisma.cargo_load.update({
+    where: { id: Number(id) },
+    data,
+  });
+}
+export async function deleteCargoLoad(id: number | bigint) {
+  const numericId = typeof id === "bigint" ? Number(id) : id;
+  return await prisma.cargo_load.delete({
+    where: { id: numericId },
+  });
+}
 
 export const cargoLoadRepository = {
   saveCargoLoad,
   getCargoLoadData,
+  updateCargoLoad,
+  deleteCargoLoad,
 };

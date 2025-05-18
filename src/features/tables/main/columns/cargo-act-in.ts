@@ -18,8 +18,12 @@ export const columns: ColumnDef<{}>[] = [
     header: "ID статуса",
   },
   {
-    accessorKey: "supplier_id",
-    header: "ID поставщика",
+    accessorKey: "shipper_id",
+    header: "ID грузоотправителя",
+  },
+  {
+    accessorKey: "consignee_id",
+    header: "ID грузополучателя",
   },
   {
     accessorKey: "rail_waybill",

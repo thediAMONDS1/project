@@ -83,20 +83,20 @@ export function VesselVoyageFields({
   return (
     <>
       {renderField(
-        "Estimated Departure Date",
+        "Расчетная дата отправления",
         fieldIds.estimated_date_departure,
         "estimated_date_departure",
-        "YYYY-MM-DD",
+        "ГГГГ-ММ-ДД",
         "date",
         errors?.estimated_date_departure,
         formData?.get("estimated_date_departure")?.toString()
       )}
       {renderSelect(
-        "Vessel",
+        "Судно",
         fieldIds.vessel_id,
         "vessel_id",
         vessel.map((v) => ({ id: v.id, label: v.vessel_name })),
-        "Select vessel",
+        "Выберите судно",
         errors?.vessel_id,
         formData?.get("vessel_id")?.toString()
       )}

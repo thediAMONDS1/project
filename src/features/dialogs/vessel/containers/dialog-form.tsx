@@ -13,12 +13,12 @@ import {
 import {
   createVesselAction,
   CreateVesselFormState,
-} from "../actions/create-vessel"; // обновлён импорт
+} from "../actions/create-vessel";
 import { useActionState } from "@/shared/lib/react";
 import { CreateFormLayout } from "../../create-form-layouts";
 import { ErrorMessage } from "@/shared/ui/alert-description";
 import { SubmitButton } from "@/shared/ui/submit-button";
-import { VesselFields } from "../fields/vessel-fields"; // обновлён импорт
+import { VesselFields } from "../fields/vessel-fields";
 
 export function CreateVesselButton() {
   const [open, setOpen] = useState(false);
@@ -33,18 +33,18 @@ export function CreateVesselButton() {
       <DialogTrigger asChild>
         <Button>
           <PlusCircle className="mr-2 h-4 w-4" />
-          Create Vessel
+          Добавить судно
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create Vessel</DialogTitle>
+          <DialogTitle>Добавление судна</DialogTitle>
         </DialogHeader>
         <CreateFormLayout
           action={action}
           fields={<VesselFields {...formState} />}
           actions={
-            <SubmitButton isPending={isPending}>Create Vessel</SubmitButton>
+            <SubmitButton isPending={isPending}>Добавить судно</SubmitButton>
           }
           error={<ErrorMessage error={formState.errors?._errors} />}
         />

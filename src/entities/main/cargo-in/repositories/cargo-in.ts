@@ -39,8 +39,14 @@ export async function getCargoInData() {
     ...cargo_in,
   }));
 }
-
+export async function deleteCargoIn(id: number | bigint) {
+  const numericId = typeof id === "bigint" ? Number(id) : id;
+  return await prisma.cargo_in.delete({
+    where: { id: numericId },
+  });
+}
 export const cargoInRepository = {
   saveCargoIn,
   getCargoInData,
+  deleteCargoIn,
 };

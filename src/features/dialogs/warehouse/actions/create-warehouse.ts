@@ -17,14 +17,14 @@ export type CreateWarehouseFormState = {
 
 const formDataSchema = z.object({
   warehouse_number: z.coerce.number().int().positive({
-    message: "Warehouse number must be a positive integer",
+    message: "Номер склада должен быть положительным целым числом",
   }),
-  warehouse_type: z.string().min(1, "Warehouse type is required"),
+  warehouse_type: z.string().min(1, "Тип склада обязателен"),
   add_info: z
     .string()
     .optional()
     .transform((val) =>
-      val?.trim() === "" || val === undefined ? "No comments" : val
+      val?.trim() === "" || val === undefined ? "Без комментариев" : val
     ),
 });
 

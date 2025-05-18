@@ -101,27 +101,22 @@ async function fillReferenceData() {
     data: [
       {
         vessel_name: "Судно-1",
-        user_id: "cma6ik4de00001pcoljc5p09p",
         add_info: "",
       },
       {
         vessel_name: "Судно-2",
-        user_id: "cma6ik4de00001pcoljc5p09p",
         add_info: "",
       },
       {
         vessel_name: "Судно-3",
-        user_id: "cma6ik4de00001pcoljc5p09p",
         add_info: "",
       },
       {
         vessel_name: "Судно-4",
-        user_id: "cma6ik4de00001pcoljc5p09p",
         add_info: "",
       },
       {
         vessel_name: "Судно-5",
-        user_id: "cma6ik4de00001pcoljc5p09p",
         add_info: "",
       },
     ],
@@ -140,13 +135,11 @@ async function fillReferenceData() {
         shipper_name: "Отправитель А",
         add_info: "",
         contact: "+79025554210",
-        user_id: "cma6ik4de00001pcoljc5p09p", // admin
       },
       {
         shipper_name: "Отправитель Б",
         add_info: "",
         contact: "+79782349858",
-        user_id: "cmaaynjb800001p8cpcpd16s1", // manager
       },
     ],
   });
@@ -157,13 +150,11 @@ async function fillReferenceData() {
         consignee_name: "Грузополучатель А",
         add_info: "",
         contact: "+79096565742",
-        user_id: "cma6ik4de00001pcoljc5p09p",
       },
       {
         consignee_name: "Грузополучатель Б",
         add_info: "",
         contact: "+79503948584",
-        user_id: "cmaaynjb800001p8cpcpd16s1",
       },
     ],
   });

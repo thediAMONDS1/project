@@ -33,18 +33,18 @@ export function CreateWarehouseButton() {
       <DialogTrigger asChild>
         <Button>
           <PlusCircle className="mr-2 h-4 w-4" />
-          Создать склад
+          Добавить склад
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Создать склад</DialogTitle>
+          <DialogTitle>Добавление склада</DialogTitle>
         </DialogHeader>
         <CreateFormLayout
           action={action}
           fields={<WarehouseFields {...formState} />}
           actions={
-            <SubmitButton isPending={isPending}>Создать склад</SubmitButton>
+            <SubmitButton isPending={isPending}>Добавить склад</SubmitButton>
           }
           error={<ErrorMessage error={formState.errors?._errors} />}
         />

@@ -19,11 +19,9 @@ model user {
 
   cargo_in      cargo_in[]
   vessel_voyage vessel_voyage[]
-  vessel        ref_vessel[]
-  cargo_load    cargo_load[]
-  cargo_act_in  cargo_act_in[]
-  ref_shipper   ref_shipper[]
-  ref_consignee ref_consignee[]
+
+  cargo_load   cargo_load[]
+  cargo_act_in cargo_act_in[]
 }
 
 // Дополнительная информация о пользователе
@@ -63,12 +61,11 @@ model ref_cargo {
 
 // Справочник. Суда
 model ref_vessel {
-  id          BigInt          @id @default(autoincrement())
+  id          BigInt @id @default(autoincrement())
   vessel_name String
   add_info    String
-  user_id     String
-  user        user            @relation(fields: [user_id], references: [id])
-  voyages     vessel_voyage[]
+
+  voyages vessel_voyage[]
 }
 
 // Справочник. Склад
@@ -82,26 +79,24 @@ model ref_warehouse {
 
 // Справочник. Поставщик
 model ref_shipper {
-  id           BigInt         @id @default(autoincrement())
+  id           BigInt @id @default(autoincrement())
   shipper_name String
   add_info     String
   contact      String
-  user_id      String
-  user         user           @relation(fields: [user_id], references: [id])
+
   cargo_act_in cargo_act_in[]
   cargo_load   cargo_load[]
 }
 
 // Справочник. Грузополучатель
 model ref_consignee {
-  id             BigInt         @id @default(autoincrement())
+  id             BigInt @id @default(autoincrement())
   consignee_name String
   add_info       String
   contact        String
-  user_id        String
-  user           user           @relation(fields: [user_id], references: [id])
-  cargo_act_in   cargo_act_in[]
-  cargo_load     cargo_load[]
+
+  cargo_act_in cargo_act_in[]
+  cargo_load   cargo_load[]
 }
 
 // Приемные акты. Прием груза оформляется приемным актом

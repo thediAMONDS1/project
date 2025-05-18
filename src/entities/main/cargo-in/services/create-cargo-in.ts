@@ -6,7 +6,7 @@ export const createCargoIn = async ({
   weight_brutto,
   weight_brutto_rest,
   cargo_act_in_id,
-  warehouse,
+  warehouse_id,
   wagon_id,
   user_id,
   add_info,
@@ -15,7 +15,7 @@ export const createCargoIn = async ({
   weight_brutto: number;
   weight_brutto_rest: number;
   cargo_act_in_id: number;
-  warehouse: number;
+  warehouse_id: number;
   wagon_id: number;
   user_id: string;
   add_info: string;
@@ -26,14 +26,18 @@ export const createCargoIn = async ({
         id: cargo_id,
       },
     },
-    weight_brutto_start: weight_brutto, // вес с учетом схемы
+    weight_brutto_start: weight_brutto,
     weight_brutto_rest,
     cargo_act_in: {
       connect: {
         id: cargo_act_in_id,
       },
     },
-    warehouse,
+    warehouse: {
+      connect: {
+        id: warehouse_id,
+      },
+    },
     wagon: {
       connect: {
         id: wagon_id,
@@ -44,7 +48,6 @@ export const createCargoIn = async ({
         id: user_id,
       },
     },
-    add_info,
   });
 
   return right(cargo_in);

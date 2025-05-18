@@ -32,15 +32,21 @@ type Wagon = {
   id: bigint;
   wagon_number: number;
 };
+type Warehouse = {
+  id: bigint;
+  warehouse_number: number;
+};
 
 export function CreateCargoInButton({
   cargo,
   wagon,
   cargo_act_in,
+  warehouse,
 }: {
   cargo: Cargo[];
   wagon: Wagon[];
   cargo_act_in: CargoActIn[];
+  warehouse: Warehouse[];
 }) {
   const [open, setOpen] = useState(false);
 
@@ -53,12 +59,12 @@ export function CreateCargoInButton({
       <DialogTrigger asChild>
         <Button>
           <PlusCircle className="mr-2 h-4 w-4" />
-          Create Cargo In
+          Добавить приём груза
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle />
+          <DialogTitle>Добавление приём груза</DialogTitle>
         </DialogHeader>
         <CreateFormLayout
           action={action}
@@ -68,10 +74,13 @@ export function CreateCargoInButton({
               cargo={cargo}
               cargo_act_in={cargo_act_in}
               wagon={wagon}
+              warehouse={warehouse}
             />
           }
           actions={
-            <SubmitButton isPending={isPending}>Create Cargo</SubmitButton>
+            <SubmitButton isPending={isPending}>
+              Добавить приём груза
+            </SubmitButton>
           }
           error={<ErrorMessage error={formState.errors?._errors} />}
         />

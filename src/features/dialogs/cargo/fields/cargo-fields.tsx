@@ -41,10 +41,10 @@ export function CargoFields({
   return (
     <>
       {renderField(
-        "Cargo Name",
+        "Название груза",
         fieldIds.cargo_name,
         "cargo_name",
-        "Enter the cargo name",
+        "Введите название груза",
         "text",
         errors?.cargo_name,
         formData?.get("cargo_name")?.toString()

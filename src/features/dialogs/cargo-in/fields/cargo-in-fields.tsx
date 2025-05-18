@@ -24,30 +24,36 @@ type Wagon = {
   wagon_number: number;
 };
 
+type Warehouse = {
+  id: bigint;
+  warehouse_number: number;
+};
+
 export function CargoInFields({
   errors,
   formData,
   cargo,
   cargo_act_in,
   wagon,
+  warehouse,
 }: {
   formData?: FormData;
   errors?: Record<string, string>;
   cargo: Cargo[];
   cargo_act_in: CargoActIn[];
   wagon: Wagon[];
+  warehouse: Warehouse[];
 }) {
   const fieldIds = {
     cargo_id: useId(),
     weight_brutto: useId(),
     weight_brutto_rest: useId(),
     cargo_act_in_id: useId(),
-    warehouse: useId(),
-    storage_type_id: useId(),
+    warehouse_id: useId(),
     wagon_id: useId(),
   };
 
-  const renderField = (
+  const renderTextField = (
     label: string,
     id: string,
     name: string,
@@ -74,6 +80,8 @@ export function CargoInFields({
     label: string,
     id: string,
     name: string,
+    placeholder: string,
+    options: { id: bigint; label: string }[],
     error?: string,
     defaultValue?: string
   ) => (
@@ -83,66 +91,12 @@ export function CargoInFields({
         <SelectTrigger
           className={`w-full px-4 py-4 ${error ? "border-destructive/50" : ""}`}
         >
-          <SelectValue placeholder="Select cargo" />
+          <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
-          {cargo.map((item) => (
+          {options.map((item) => (
             <SelectItem key={item.id.toString()} value={item.id.toString()}>
-              {item.cargo_name}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-      {error && <div className="text-xs text-destructive">{error}</div>}
-    </div>
-  );
-
-  const renderCargoActInSelect = (
-    label: string,
-    id: string,
-    name: string,
-    error?: string,
-    defaultValue?: string
-  ) => (
-    <div className="space-y-2 w-full">
-      <Label htmlFor={id}>{label}</Label>
-      <Select name={name} defaultValue={defaultValue}>
-        <SelectTrigger
-          className={`w-full px-4 py-4 ${error ? "border-destructive/50" : ""}`}
-        >
-          <SelectValue placeholder="Select Cargo Act In" />
-        </SelectTrigger>
-        <SelectContent>
-          {cargo_act_in.map((item) => (
-            <SelectItem key={item.id.toString()} value={item.id.toString()}>
-              {item.act_in_number}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-      {error && <div className="text-xs text-destructive">{error}</div>}
-    </div>
-  );
-
-  const renderWagonSelect = (
-    label: string,
-    id: string,
-    name: string,
-    error?: string,
-    defaultValue?: string
-  ) => (
-    <div className="space-y-2 w-full">
-      <Label htmlFor={id}>{label}</Label>
-      <Select name={name} defaultValue={defaultValue}>
-        <SelectTrigger
-          className={`w-full px-4 py-4 ${error ? "border-destructive/50" : ""}`}
-        >
-          <SelectValue placeholder="Select Wagon" />
-        </SelectTrigger>
-        <SelectContent>
-          {wagon.map((item) => (
-            <SelectItem key={item.id.toString()} value={item.id.toString()}>
-              {item.wagon_number}
+              {item.label}
             </SelectItem>
           ))}
         </SelectContent>
@@ -154,59 +108,65 @@ export function CargoInFields({
   return (
     <>
       {renderSelectField(
-        "Cargo",
+        "Груз",
         fieldIds.cargo_id,
         "cargo_id",
+        "Выберите груз",
+        cargo.map((item) => ({ id: item.id, label: item.cargo_name })),
         errors?.cargo_id,
         formData?.get("cargo_id")?.toString()
       )}
-      {renderField(
-        "Weight Brutto",
+      {renderTextField(
+        "Вес",
         fieldIds.weight_brutto,
         "weight_brutto",
-        "Enter weight brutto",
+        "Введите вес",
         "number",
         errors?.weight_brutto,
         formData?.get("weight_brutto")?.toString()
       )}
-      {renderField(
-        "Weight Brutto Rest",
+      {renderTextField(
+        "Остаток веса",
         fieldIds.weight_brutto_rest,
         "weight_brutto_rest",
-        "Enter weight brutto rest",
+        "Введите остаток веса",
         "number",
         errors?.weight_brutto_rest,
         formData?.get("weight_brutto_rest")?.toString()
       )}
-      {renderCargoActInSelect(
-        "Cargo Act In ID",
+      {renderSelectField(
+        "Акт приёма груза",
         fieldIds.cargo_act_in_id,
         "cargo_act_in_id",
+        "Выберите акт приёма",
+        cargo_act_in.map((item) => ({
+          id: item.id,
+          label: item.act_in_number.toString(),
+        })),
         errors?.cargo_act_in_id,
         formData?.get("cargo_act_in_id")?.toString()
       )}
-      {renderField(
-        "Warehouse",
-        fieldIds.warehouse,
-        "warehouse",
-        "Enter warehouse number",
-        "number",
-        errors?.warehouse,
-        formData?.get("warehouse")?.toString()
+      {renderSelectField(
+        "Склад",
+        fieldIds.warehouse_id,
+        "warehouse_id",
+        "Выберите склад",
+        warehouse.map((item) => ({
+          id: item.id,
+          label: item.warehouse_number.toString(),
+        })),
+        errors?.warehouse_id,
+        formData?.get("warehouse_id")?.toString()
       )}
-      {renderField(
-        "Storage Type ID",
-        fieldIds.storage_type_id,
-        "storage_type_id",
-        "Enter storage type ID",
-        "number",
-        errors?.storage_type_id,
-        formData?.get("storage_type_id")?.toString()
-      )}
-      {renderWagonSelect(
-        "Wagon",
+      {renderSelectField(
+        "Вагон",
         fieldIds.wagon_id,
         "wagon_id",
+        "Выберите вагон",
+        wagon.map((item) => ({
+          id: item.id,
+          label: item.wagon_number.toString(),
+        })),
         errors?.wagon_id,
         formData?.get("wagon_id")?.toString()
       )}

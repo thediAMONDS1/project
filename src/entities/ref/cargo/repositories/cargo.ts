@@ -23,7 +23,15 @@ export async function getCargoData() {
   }));
 }
 
+export async function deleteCargo(id: number | bigint) {
+  const numericId = typeof id === "bigint" ? Number(id) : id;
+  return await prisma.ref_cargo.delete({
+    where: { id: numericId },
+  });
+}
+
 export const cargoRepository = {
   saveCargo,
   getCargoData,
+  deleteCargo,
 };

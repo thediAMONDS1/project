@@ -33,18 +33,18 @@ export function CreateWagonButton() {
       <DialogTrigger asChild>
         <Button>
           <PlusCircle className="mr-2 h-4 w-4" />
-          Create Wagon
+          Добавить вагон
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle />
+          <DialogTitle>Добавление вагона</DialogTitle>
         </DialogHeader>
         <CreateFormLayout
           action={action}
           fields={<WagonFields {...formState} />}
           actions={
-            <SubmitButton isPending={isPending}>Create Wagon</SubmitButton>
+            <SubmitButton isPending={isPending}>Добавить вагон</SubmitButton>
           }
           error={<ErrorMessage error={formState.errors?._errors} />}
         />

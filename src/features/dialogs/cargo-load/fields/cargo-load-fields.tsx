@@ -22,11 +22,15 @@ export function CargoLoadFields({
   formData,
   vessel_voyage,
   cargo_act_in,
+  shipper,
+  consignee,
 }: {
   formData?: FormData;
   errors?: Record<string, string>;
   vessel_voyage: VesselVoyage[];
   cargo_act_in: CargoActIn[];
+  shipper: { id: bigint; shipper_name: string }[];
+  consignee: { id: bigint; consignee_name: string }[];
 }) {
   const fieldIds = {
     load_date: useId(),
@@ -74,6 +78,7 @@ export function CargoLoadFields({
       <Select name={name} defaultValue={defaultValue}>
         <SelectTrigger
           className={`w-full px-4 py-4 ${error ? "border-destructive/50" : ""}`}
+          id={id}
         >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
@@ -88,63 +93,63 @@ export function CargoLoadFields({
       {error && <div className="text-xs text-destructive">{error}</div>}
     </div>
   );
+
   return (
     <>
       {renderField(
-        "Load Date",
+        "Дата загрузки",
         fieldIds.load_date,
         "load_date",
-        "Enter load date",
+        "Введите дату загрузки",
         "date",
         errors?.load_date,
         formData?.get("load_date")?.toString()
       )}
       {renderSelect(
-        "Vessel Voyage",
+        "Рейс судна",
         fieldIds.vessel_voyage_id,
         "vessel_voyage_id",
         vessel_voyage.map((v) => ({ id: v.id, label: v.id.toString() })),
-        "Select vessel voyage ID",
+        "Выберите рейс судна",
         errors?.vessel_voyage_id,
         formData?.get("vessel_voyage_id")?.toString()
       )}
-
       {renderField(
-        "Weight Brutto",
+        "Вес брутто",
         fieldIds.weight_brutto,
         "weight_brutto",
-        "Enter weight brutto",
+        "Введите вес брутто",
         "number",
         errors?.weight_brutto,
         formData?.get("weight_brutto")?.toString()
       )}
       {renderSelect(
-        "Cargo Act In",
+        "Акт приёма груза",
         fieldIds.cargo_act_in_id,
         "cargo_act_in_id",
         cargo_act_in.map((c) => ({
           id: c.id,
           label: c.act_in_number,
         })),
-        "Select cargo act in",
+        "Выберите акт приёма груза",
         errors?.cargo_act_in_id,
         formData?.get("cargo_act_in_id")?.toString()
       )}
-      {renderField(
-        "Shipper",
+      {renderSelect(
+        "Грузоотправитель",
         fieldIds.shipper,
         "shipper",
-        "Enter shipper ID",
-        "number",
+        shipper.map((s) => ({ id: s.id, label: s.shipper_name })),
+        "Выберите грузоотправителя",
         errors?.shipper,
         formData?.get("shipper")?.toString()
       )}
-      {renderField(
-        "Consignee",
+      {renderSelect(
+        "Грузополучатель",
         fieldIds.consignee,
         "consignee",
-        "Enter consignee ID",
-        "number",
+        consignee.map((c) => ({ id: c.id, label: c.consignee_name })),
+        "Выберите грузополучателя",
         errors?.consignee,
         formData?.get("consignee")?.toString()
       )}

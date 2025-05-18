@@ -19,7 +19,7 @@ const formDataSchema = z.object({
     .string()
     .optional()
     .transform((val) =>
-      val?.trim() === "" || val === undefined ? "No comments" : val
+      val?.trim() === "" || val === undefined ? "Без комментариев" : val
     ),
 });
 

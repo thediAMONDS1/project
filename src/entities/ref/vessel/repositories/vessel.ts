@@ -34,8 +34,16 @@ export async function getVesselData() {
   return vessels;
 }
 
+export async function deleteVessel(id: number | bigint) {
+  const numericId = typeof id === "bigint" ? Number(id) : id;
+  return await prisma.ref_vessel.delete({
+    where: { id: numericId },
+  });
+}
+
 export const vesselRepository = {
   saveVessel,
   getVesselData,
   getVesselName,
+  deleteVessel,
 };

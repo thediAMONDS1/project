@@ -32,18 +32,18 @@ export function CreateCargoButton() {
       <DialogTrigger asChild>
         <Button>
           <PlusCircle className="mr-2 h-4 w-4" />
-          Create Cargo
+          Добавить груз
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle />
+          <DialogTitle>Добавление груза</DialogTitle>
         </DialogHeader>
         <CreateFormLayout
           action={action}
           fields={<CargoFields {...formState} />}
           actions={
-            <SubmitButton isPending={isPending}>Create Cargo</SubmitButton>
+            <SubmitButton isPending={isPending}>Добавить груз</SubmitButton>
           }
           error={<ErrorMessage error={formState.errors?._errors} />}
         />

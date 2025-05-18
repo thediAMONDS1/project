@@ -16,12 +16,12 @@ export type CreateShipperFormState = {
 };
 
 const formDataSchema = z.object({
-  shipper_name: z.string().min(1, "Shipper name is required"),
+  shipper_name: z.string().min(1, "Название поставщика обязательно"),
   add_info: z
     .string()
     .optional()
     .transform((val) =>
-      val?.trim() === "" || val === undefined ? "No comments" : val
+      val?.trim() === "" || val === undefined ? "Без комментариев" : val
     ),
   contact: z.string().default(""),
 });
@@ -53,7 +53,6 @@ export const createShipperAction = async (
 
   const createResult = await createShipper({
     ...result.data,
-    user_id: session.id,
   });
 
   if (createResult.type === "right") {

@@ -43,10 +43,10 @@ export function VesselFields({
   return (
     <>
       {renderField(
-        "Vessel Name",
+        "Название судна",
         fieldIds.vessel_name,
         "vessel_name",
-        "Enter the vessel name",
+        "Введите название судна",
         "text",
         errors?.vessel_name,
         formData?.get("vessel_name")?.toString()

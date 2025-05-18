@@ -1,7 +1,6 @@
 "use server";
 
 import { createCargo } from "@/entities/ref/cargo/server";
-import { sessionService } from "@/entities/ref/user/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -15,7 +14,9 @@ export type CreateCargoFormState = {
 };
 
 const formDataSchema = z.object({
-  cargo_name: z.string().min(3, "Cargo name must be at least 3 characters"),
+  cargo_name: z
+    .string()
+    .min(3, "Название груза должно содержать минимум 3 символа"),
   add_info: z.string().default(""),
 });
 
@@ -23,11 +24,6 @@ export const createCargoAction = async (
   _state: CreateCargoFormState,
   formData: FormData
 ): Promise<CreateCargoFormState> => {
-  const { session } = await sessionService.verifySession();
-  if (!session) {
-    redirect("/sign-in");
-  }
-
   const data = Object.fromEntries(formData.entries());
 
   const result = formDataSchema.safeParse(data);

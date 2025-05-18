@@ -14,12 +14,12 @@ export type CreateVesselFormState = {
 };
 
 const formDataSchema = z.object({
-  vessel_name: z.string().min(1, "Vessel name is required"),
+  vessel_name: z.string().min(1, "Название судна обязательно"),
   add_info: z
     .string()
     .optional()
     .transform((val) =>
-      val?.trim() === "" || val === undefined ? "No comments" : val
+      val?.trim() === "" || val === undefined ? "Без комментариев" : val
     ),
 });
 
@@ -48,7 +48,6 @@ export const createVesselAction = async (
 
   const createResult = await createVessel({
     ...result.data,
-    user_id: session.id,
   });
 
   if (createResult.type === "right") {

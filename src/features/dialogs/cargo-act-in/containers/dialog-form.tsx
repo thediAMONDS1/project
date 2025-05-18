@@ -24,32 +24,57 @@ type Status = {
   id: bigint;
   status_name: string;
 };
-
-export function CreateCargoActInButton({ status }: { status: Status[] }) {
+type Shipper = {
+  id: bigint;
+  shipper_name: string;
+};
+type Consignee = {
+  id: bigint;
+  consignee_name: string;
+};
+export function CreateCargoActInButton({
+  status,
+  shipper,
+  consignee,
+}: {
+  status: Status[];
+  shipper: Shipper[];
+  consignee: Consignee[];
+}) {
   const [open, setOpen] = useState(false);
 
   const [formState, action, isPending] = useActionState(
     createCargoActInAction,
     {} as CreateCargoActInFormState
   );
-  console.log(status);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
           <PlusCircle className="mr-2 h-4 w-4" />
-          Create Cargo Act In
+          Добавить акт приёма
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create Cargo Act In</DialogTitle>
+          <DialogTitle>Добавление акта приёма</DialogTitle>
         </DialogHeader>
         <CreateFormLayout
           action={action}
-          fields={<CargoActInFields {...formState} status={status} />}
+          fields={
+            <CargoActInFields
+              {...formState}
+              status={status}
+              shipper={shipper}
+              consignee={consignee}
+            />
+          }
           actions={
-            <SubmitButton isPending={isPending}>Create Cargo Act</SubmitButton>
+            <SubmitButton isPending={isPending}>
+              {" "}
+              Добавить акт приёма
+            </SubmitButton>
           }
           error={<ErrorMessage error={formState.errors?._errors} />}
         />

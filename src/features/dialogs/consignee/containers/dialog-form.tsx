@@ -33,19 +33,19 @@ export function CreateConsigneeButton() {
       <DialogTrigger asChild>
         <Button>
           <PlusCircle className="mr-2 h-4 w-4" />
-          Создать грузополучателя
+          Добавить грузополучателя
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Создать грузополучателя</DialogTitle>
+          <DialogTitle>Добавление грузополучателя</DialogTitle>
         </DialogHeader>
         <CreateFormLayout
           action={action}
           fields={<ConsigneeFields {...formState} />}
           actions={
             <SubmitButton isPending={isPending}>
-              Создать грузополучателя
+              Добавить грузополучателя
             </SubmitButton>
           }
           error={<ErrorMessage error={formState.errors?._errors} />}

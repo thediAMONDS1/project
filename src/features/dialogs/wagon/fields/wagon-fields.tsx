@@ -43,19 +43,19 @@ export function WagonFields({
   return (
     <>
       {renderField(
-        "Wagon Number",
+        "Номер вагона",
         fieldIds.wagon_number,
         "wagon_number",
-        "Enter the wagon number",
+        "Введите номер вагона",
         "number",
         errors?.wagon_number,
         formData?.get("wagon_number")?.toString()
       )}
       {renderField(
-        "Wagon Type",
+        "Тип вагона",
         fieldIds.wagon_type,
         "wagon_type",
-        "Enter the wagon type",
+        "Введите тип вагона",
         "text",
         errors?.wagon_type,
         formData?.get("wagon_type")?.toString()

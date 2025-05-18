@@ -23,7 +23,7 @@ const formDataSchema = z.object({
     .string()
     .optional()
     .transform((val) =>
-      val?.trim() === "" || val === undefined ? "No comments" : val
+      val?.trim() === "" || val === undefined ? "Без комментариев" : val
     ),
 });
 
@@ -35,7 +35,6 @@ export const createCargoActInAction = async (
   if (!session) redirect("/sign-in");
 
   const data = Object.fromEntries(formData.entries());
-
   const result = formDataSchema.safeParse({
     ...data,
     act_in_date: data.act_in_date

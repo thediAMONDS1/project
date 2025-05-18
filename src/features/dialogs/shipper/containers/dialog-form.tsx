@@ -33,19 +33,19 @@ export function CreateShipperButton() {
       <DialogTrigger asChild>
         <Button>
           <PlusCircle className="mr-2 h-4 w-4" />
-          Создать поставщика
+          Добавить поставщика
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Создать поставщика</DialogTitle>
+          <DialogTitle>Создание поставщика</DialogTitle>
         </DialogHeader>
         <CreateFormLayout
           action={action}
           fields={<ShipperFields {...formState} />}
           actions={
             <SubmitButton isPending={isPending}>
-              Создать поставщика
+              Добавить поставщика
             </SubmitButton>
           }
           error={<ErrorMessage error={formState.errors?._errors} />}

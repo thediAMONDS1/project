@@ -37,18 +37,20 @@ export function CreateVesselVoyageButton({ vessel }: { vessel: Vessel[] }) {
       <DialogTrigger asChild>
         <Button>
           <PlusCircle className="mr-2 h-4 w-4" />
-          Create Vessel Voyage
+          Добавить рейс судна
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create Vessel Voyage</DialogTitle>
+          <DialogTitle>Добавление рейса судна</DialogTitle>
         </DialogHeader>
         <CreateFormLayout
           action={action}
           fields={<VesselVoyageFields {...formState} vessel={vessel} />}
           actions={
-            <SubmitButton isPending={isPending}>Create Voyage</SubmitButton>
+            <SubmitButton isPending={isPending}>
+              Добавить рейс судна
+            </SubmitButton>
           }
           error={<ErrorMessage error={formState.errors?._errors} />}
         />

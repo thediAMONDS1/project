@@ -17,14 +17,13 @@ const formDataSchema = z.object({
   weight_brutto: z.coerce.number().int().positive(),
   weight_brutto_rest: z.coerce.number().int().nonnegative(),
   cargo_act_in_id: z.coerce.number().int().positive(),
-  warehouse: z.coerce.number().int(),
-  storage_type_id: z.coerce.number().int(),
+  warehouse_id: z.coerce.number().int(),
   wagon_id: z.coerce.number().int().positive(),
   add_info: z
     .string()
     .optional()
     .transform((val) =>
-      val?.trim() === "" || val === undefined ? "No comments" : val
+      val?.trim() === "" || val === undefined ? "Без комментариев" : val
     ),
 });
 

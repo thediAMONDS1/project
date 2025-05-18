@@ -22,8 +22,16 @@ export async function getShipperNames() {
   return shippers;
 }
 
+export async function deleteShipper(id: number | bigint) {
+  const numericId = typeof id === "bigint" ? Number(id) : id;
+  return await prisma.ref_shipper.delete({
+    where: { id: numericId },
+  });
+}
+
 export const shipperRepository = {
   saveShipper,
   getShipperData,
   getShipperNames,
+  deleteShipper,
 };

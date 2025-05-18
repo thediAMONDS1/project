@@ -22,8 +22,16 @@ export async function getWarehouseNumber() {
   return warehouses;
 }
 
+export async function deleteWarehouse(id: number | bigint) {
+  const numericId = typeof id === "bigint" ? Number(id) : id;
+  return await prisma.ref_warehouse.delete({
+    where: { id: numericId },
+  });
+}
+
 export const warehouseRepository = {
   saveWarehouse,
   getWarehouseData,
   getWarehouseNumber,
+  deleteWarehouse,
 };
