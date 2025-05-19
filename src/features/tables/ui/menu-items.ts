@@ -51,7 +51,7 @@ export const referenceTables = [
     name: "Вагоны",
     href: "/wagons",
     icon: Train,
-    roles: ["admin", "manager"],
+    roles: ["admin", "manager", "user"],
   },
   {
     name: "Судна",
@@ -64,19 +64,19 @@ export const referenceTables = [
     name: "Грузы",
     href: "/cargos",
     icon: Package,
-    roles: ["admin", "manager"],
+    roles: ["admin", "manager", "user"],
   },
   {
     name: "Статусы актов поступления",
     href: "/cargos-act-in-status",
     icon: ClipboardList,
-    roles: ["admin", "manager"],
+    roles: ["admin"],
   },
   {
     name: "Склады",
     href: "/warehouses",
     icon: Clipboard,
-    roles: ["admin", "manager"],
+    roles: ["admin", "manager", "user"],
   },
   {
     name: "Поставщики",
