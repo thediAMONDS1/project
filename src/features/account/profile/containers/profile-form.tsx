@@ -18,9 +18,7 @@ export function ProfileForm({ data }: { data: UserData | null }) {
     <>
       <ProfileLayout
         fields={<ProfileFields {...formState} data={data || undefined} />}
-        actions={
-          <SubmitButton isPending={isPending}>Save Changes</SubmitButton>
-        }
+        actions={<SubmitButton isPending={isPending}>Сохранить</SubmitButton>}
         error={<ErrorMessage error={formState.errors?._errors} />}
         action={action}
         data={data || undefined}

@@ -45,7 +45,7 @@ export function ProfileFields({
         <div className="space-y-2">
           <Label htmlFor="emailId" className="flex items-center gap-2">
             <Mail className="h-4 w-4" />
-            Email
+            Почта
           </Label>
           <Input
             id="emailId"
@@ -61,7 +61,7 @@ export function ProfileFields({
         <div className="space-y-2 ">
           <Label htmlFor="phoneId" className="flex items-center gap-2">
             <Phone className="h-4 w-4" />
-            Phone
+            Телефон
           </Label>
           <Input
             id="phoneId"
@@ -77,7 +77,7 @@ export function ProfileFields({
         <div className="space-y-2">
           <Label htmlFor="nameId" className="flex items-center gap-2">
             <User className="h-4 w-4" />
-            Name
+            Имя
           </Label>
           <Input
             id="nameId"
@@ -93,7 +93,7 @@ export function ProfileFields({
         <div className="space-y-2">
           <Label htmlFor="lastNameId" className="flex items-center gap-2">
             <User className="h-4 w-4" />
-            Last Name
+            Фамилия
           </Label>
           <Input
             id="lastNameId"

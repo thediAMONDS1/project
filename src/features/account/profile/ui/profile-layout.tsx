@@ -34,8 +34,8 @@ export function ProfileLayout({
       <div className="flex gap-4">
         <Card className="w-full max-w-2xl">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold">Profile</CardTitle>
-            <CardDescription>Update your profile information.</CardDescription>
+            <CardTitle className="text-2xl font-bold">Профиль</CardTitle>
+            <CardDescription>Обновите информацию профиля</CardDescription>
             <div className="text-left">
               <h2 className="text-lg font-semibold flex items-center gap-2">
                 <CircleUser className="h-5 w-5" />
@@ -43,9 +43,6 @@ export function ProfileLayout({
               </h2>
               <p className="text-sm text-muted-foreground">{data?.role}</p>
             </div>
-            <Avatar className="w-32 h-32 mx-auto">
-              <AvatarFallback>UN</AvatarFallback>
-            </Avatar>
           </CardHeader>
           <CardContent>
             <form action={action} className="space-y-4">

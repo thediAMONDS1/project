@@ -8,7 +8,7 @@ export default function WelcomeForm() {
   return (
     <div className="relative w-full h-screen overflow-hidden">
       <Video />
-      <div className="relative flex items-center justify-center w-full h-full">
+      <div className="relative flex items-center justify-center w-full h-full bg-zinc-950 opacity-50">
         <div className="bg-opacity-50 p-8 rounded-lg max-w-xl text-center">
           <Image
             src={logo}

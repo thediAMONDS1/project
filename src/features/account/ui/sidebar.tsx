@@ -17,27 +17,18 @@ export const Sidebar = () => {
             className="flex items-center gap-3 p-5 w-full"
           >
             <User size={18} />
-            <span>Profile</span>
-          </Button>
-        </Link>
-        <Link href="/settings">
-          <Button
-            variant={pathname === "/account/settings" ? "default" : "outline"}
-            className="flex items-center gap-3 p-5 w-full"
-          >
-            <Settings size={18} />
-            <span>Settings</span>
+            <span>Профиль</span>
           </Button>
         </Link>
       </div>
       <div className="bg-white/5 rounded-lg p-4">
-        <Link href="/">
+        <Link href="/tables/cargos-load">
           <Button
             variant="outline"
             className="flex items-center gap-3 p-5 w-full"
           >
             <ArrowLeft size={18} />
-            <span>"Back to"</span>
+            <span>"Назад"</span>
           </Button>
         </Link>
       </div>
