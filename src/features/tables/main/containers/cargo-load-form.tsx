@@ -32,6 +32,8 @@ export default async function CargoLoadForm() {
       columns={columns}
       data={data}
       cargo_act_in={cargo_act_in}
+      shipper={shipper}
+      consignee={consignee}
     />
   );
 }

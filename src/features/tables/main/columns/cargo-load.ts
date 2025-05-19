@@ -22,11 +22,11 @@ export const columns: ColumnDef<{}>[] = [
     header: "ID акта поступления груза",
   },
   {
-    accessorKey: "shipper",
+    accessorKey: "shipper_id",
     header: "Отправитель",
   },
   {
-    accessorKey: "consignee",
+    accessorKey: "consignee_id",
     header: "Получатель",
   },
   {

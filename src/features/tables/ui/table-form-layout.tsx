@@ -122,7 +122,6 @@ export default function TableLayout({
         break;
     }
   };
-
   return (
     <>
       <div className="flex flex-col h-screen">
