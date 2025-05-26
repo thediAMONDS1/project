@@ -1,7 +1,7 @@
 import TableLayout from "../../ui/table-form-layout";
 
 import { getShipperData } from "@/entities/ref/shipper/repositories/shipper";
-import { getCurrentUser } from "@/entities/ref/user/services/get-current-user";
+import { getCurrentUser } from "@/entities/user/services/get-current-user";
 import { CreateShipperButton } from "@/features/dialogs/shipper/containers/dialog-form";
 import { columns } from "../columns/shipper";
 

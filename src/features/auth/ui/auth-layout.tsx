@@ -45,12 +45,12 @@ export function AuthFormLayout({
               />
             </Link>
           </div>
-          <h1 className="text-4xl font-bold mb-4">Welcome to Our Platform</h1>
+          <h1 className="text-4xl font-bold mb-4">Добро пожаловать</h1>
           <p className="text-center max-w-md mx-auto">
-            Our platform is designed to manage the transportation processes of
-            bulk mineral cargo. We provide modern tools that simplify logistics,
-            enhance efficiency, and ensure transparency. Join us and become part
-            of the innovations in the industry.
+            Наша платформа предназначена для управления процессами перевозки
+            навалочных минеральных грузов. Мы предоставляем современные
+            инструменты, которые упрощают логистику, повышают эффективность и
+            обеспечивают прозрачность.
           </p>
         </div>
       </main>

@@ -1,6 +1,6 @@
 "use server";
 
-import { sessionService, editUser } from "@/entities/ref/user/server";
+import { sessionService, editUser } from "@/entities/user/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 

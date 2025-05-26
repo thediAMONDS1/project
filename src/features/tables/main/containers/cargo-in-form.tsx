@@ -1,7 +1,7 @@
 import TableLayout from "../../ui/table-form-layout";
 import { columns } from "../columns/cargo-in";
 import { getCargoInData } from "@/entities/main/cargo-in/repositories/cargo-in";
-import { getCurrentUser } from "@/entities/ref/user/services/get-current-user";
+import { getCurrentUser } from "@/entities/user/services/get-current-user";
 import { CreateCargoInButton } from "@/features/dialogs/cargo-in/containers/dialog-form";
 import { getCargoData } from "@/entities/ref/cargo/repositories/cargo";
 import { getCargoActInNumber } from "@/entities/main/cargo-act-in/repositories/cargo-act-in";

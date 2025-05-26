@@ -1,4 +1,4 @@
-import { sessionService } from "@/entities/ref/user/server";
+import { sessionService } from "@/entities/user/server";
 import { Button } from "@/shared/ui/button";
 import { redirect } from "next/navigation";
 import Image from "next/image";

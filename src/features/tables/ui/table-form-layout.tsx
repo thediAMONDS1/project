@@ -3,10 +3,9 @@ import type React from "react";
 
 import { DataTable } from "./data-table";
 
-import { Footer } from "@/features/footer/footer";
 import MenuLayout from "./menu-layout";
 import { deleteCargoIn } from "@/entities/main/cargo-in/repositories/cargo-in";
-import { redirect } from "next/dist/server/api-utils";
+
 import { deleteCargoActIn } from "@/entities/main/cargo-act-in/repositories/cargo-act-in";
 import { deleteCargoLoad } from "@/entities/main/cargo-load/repositories/cargo-load";
 import { deleteVesselVoyage } from "@/entities/main/vessel-voyage/repositories/vessel-voyage";
@@ -146,7 +145,6 @@ export default function TableLayout({
             />
           </div>
         </div>
-        <Footer />
       </div>
     </>
   );

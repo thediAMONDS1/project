@@ -1,4 +1,4 @@
-import { sessionService } from "@/entities/ref/user/server";
+import { sessionService } from "@/entities/user/server";
 import { MainForm } from "@/features/main/main";
 import { redirect } from "next/navigation";
 

@@ -13,4 +13,8 @@ export const columns: ColumnDef<{}>[] = [
     accessorKey: "wagon_type",
     header: "Тип вагона",
   },
+  {
+    accessorKey: "add_info",
+    header: "Доп информация",
+  },
 ];

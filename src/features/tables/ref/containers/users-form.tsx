@@ -1,7 +1,7 @@
-import { getUserData } from "@/entities/ref/user/repositories/user";
+import { getUserData } from "@/entities/user/repositories/user";
 import TableLayout from "../../ui/table-form-layout";
 import { columns } from "../columns/users";
-import { getCurrentUser } from "@/entities/ref/user/services/get-current-user";
+import { getCurrentUser } from "@/entities/user/services/get-current-user";
 
 export default async function UsersForm() {
   const data = await getUserData();

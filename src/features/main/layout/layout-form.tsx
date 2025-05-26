@@ -19,7 +19,7 @@ export function Layout() {
           </div>
           <div className="flex items-center">
             <Link href="/sign-in">
-              <Button size="sm">Sign in</Button>
+              <Button size="sm">Войти</Button>
             </Link>
           </div>
         </header>

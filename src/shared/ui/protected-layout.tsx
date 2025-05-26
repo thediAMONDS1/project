@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/entities/ref/user/services/get-current-user";
+import { getCurrentUser } from "@/entities/user/services/get-current-user";
 import { redirect } from "next/navigation";
 
 export default async function ProtectedLayout({

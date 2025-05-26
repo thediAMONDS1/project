@@ -1,7 +1,7 @@
 "use server";
 
 import { createCargoIn } from "@/entities/main/cargo-in/server";
-import { sessionService } from "@/entities/ref/user/server";
+import { sessionService } from "@/entities/user/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 

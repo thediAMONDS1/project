@@ -1,7 +1,7 @@
 import TableLayout from "../../ui/table-form-layout";
 import { columns } from "../columns/cargo-act-in";
 import { getCargoActInData } from "@/entities/main/cargo-act-in/repositories/cargo-act-in";
-import { getCurrentUser } from "@/entities/ref/user/services/get-current-user";
+import { getCurrentUser } from "@/entities/user/services/get-current-user";
 import { CreateCargoActInButton } from "@/features/dialogs/cargo-act-in/containers/dialog-form";
 import { getCargoActInStatusData } from "@/entities/ref/cargo-act-in-status/repositories/cargo-act-in-status";
 import { getShipperNames } from "@/entities/ref/shipper/repositories/shipper";
@@ -15,17 +15,20 @@ export default async function CargoActInForm() {
   const shipper = await getShipperNames();
   const consignee = await getConsigneeNames();
 
+  const formComponent =
+    user?.role !== "user" ? (
+      <CreateCargoActInButton
+        status={status}
+        shipper={shipper}
+        consignee={consignee}
+      />
+    ) : null;
+
   return (
     <TableLayout
       role={user?.role || ""}
       title={"Акты поступления грузов"}
-      form_component={
-        <CreateCargoActInButton
-          status={status}
-          shipper={shipper}
-          consignee={consignee}
-        />
-      }
+      form_component={formComponent}
       columns={columns}
       data={data}
       status={status}

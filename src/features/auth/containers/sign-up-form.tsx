@@ -16,18 +16,16 @@ export function SignUpForm() {
 
   return (
     <AuthFormLayout
-      title="Sign Up"
-      description="Create your account to get started"
+      title="Регистрация"
+      description="Создайте аккаунт, чтобы начать работу"
       action={action}
       fields={<AuthFields {...formState} />}
-      actions={<SubmitButton isPending={isPending}>Sign Up</SubmitButton>}
+      actions={
+        <SubmitButton isPending={isPending}>Зарегистрироваться</SubmitButton>
+      }
       error={<ErrorMessage error={formState.errors?._errors} />}
       link={
-        <BottomLink
-          text="Already have an account?"
-          linktext="Sign In"
-          url="/sign-in"
-        />
+        <BottomLink text="Уже есть аккаунт?" linktext="Войти" url="/sign-in" />
       }
     />
   );

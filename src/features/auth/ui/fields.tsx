@@ -18,12 +18,12 @@ export function AuthFields({
   return (
     <>
       <div className="space-y-2">
-        <Label htmlFor={loginId}>Login</Label>
+        <Label htmlFor={loginId}>Логин</Label>
         <Input
           id={loginId}
           type="login"
           name="login"
-          placeholder="Enter your login"
+          placeholder="Введите логин"
           required
           defaultValue={formData?.get("login")?.toString()}
           className={errors?.login ? "border-destructive/50" : ""}
@@ -33,12 +33,12 @@ export function AuthFields({
         )}
       </div>
       <div className="space-y-2">
-        <Label htmlFor={passwordId}>Password</Label>
+        <Label htmlFor={passwordId}>Пароль</Label>
         <Input
           id={passwordId}
           type="password"
           name="password"
-          placeholder="Enter your password"
+          placeholder="Введите пароль"
           required
           defaultValue={formData?.get("password")?.toString()}
           className={errors?.password ? "border-destructive/50" : ""}

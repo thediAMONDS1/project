@@ -1,6 +1,6 @@
 "use server";
 
-import { createUser, sessionService } from "@/entities/ref/user/server";
+import { createUser, sessionService } from "@/entities/user/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -13,7 +13,8 @@ export type SignUpFormState = {
   };
 };
 const englishOnlyPattern = /^[a-zA-Z0-9]+$/;
-const englishOnlyErrorMessage = "Must contain only English letters or numbers";
+const englishOnlyErrorMessage =
+  "Должно содержать только английские буквы или цифры";
 const formDataSchema = z.object({
   login: z.string().min(5).regex(englishOnlyPattern, englishOnlyErrorMessage),
   password: z
@@ -46,7 +47,7 @@ export const signUpAction = async (
     redirect("/profile");
   }
   const errors = {
-    "user-login-exists": "User with this login already exists",
+    "user-login-exists": "Пользователь с таким логином уже существует",
   }[createUserResult.error];
   return {
     formData,

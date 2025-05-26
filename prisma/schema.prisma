@@ -7,7 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Основная информация о пользователе
 model user {
   id            String        @id @default(cuid())
   login         String
@@ -15,16 +14,14 @@ model user {
   salt          String
   role          String        @default("user")
   created_at    DateTime      @default(now()) @db.Date
-  profile       user_profile? // Связь один-к-одному с профилем
+  profile       user_profile?
 
   cargo_in      cargo_in[]
   vessel_voyage vessel_voyage[]
-
-  cargo_load   cargo_load[]
-  cargo_act_in cargo_act_in[]
+  cargo_load    cargo_load[]
+  cargo_act_in  cargo_act_in[]
 }
 
-// Дополнительная информация о пользователе
 model user_profile {
   id        String @id @default(cuid())
   phone     String

@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 import { redirect } from "next/navigation";
-import { sessionService } from "@/entities/ref/user/server";
+import { sessionService } from "@/entities/user/server";
 import { createVessel } from "@/entities/ref/vessel/server";
 
 export type CreateVesselFormState = {

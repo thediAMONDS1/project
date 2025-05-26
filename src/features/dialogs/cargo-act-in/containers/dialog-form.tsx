@@ -53,12 +53,12 @@ export function CreateCargoActInButton({
       <DialogTrigger asChild>
         <Button>
           <PlusCircle className="mr-2 h-4 w-4" />
-          Добавить акт приёма
+          Добавить акт ппоступления
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Добавление акта приёма</DialogTitle>
+          <DialogTitle>Добавление акта поступления</DialogTitle>
         </DialogHeader>
         <CreateFormLayout
           action={action}

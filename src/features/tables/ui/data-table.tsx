@@ -23,6 +23,7 @@ import React, { useMemo, useState } from "react";
 import { RowDetails } from "./row-details";
 import { referenceTables, tables } from "./menu-items";
 import { ConfirmDialog } from "./confirm-dialog";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 export function DataTable<TData, TValue>({
   role,
@@ -68,13 +69,11 @@ export function DataTable<TData, TValue>({
     setDeleteDialogOpen(true);
   };
   const deletePermissions: Record<string, string[]> = {
-    // Основные таблицы
     "Отгрузка грузов": ["admin", "manager", "user"],
     "Прием грузов": ["admin", "manager", "user"],
-    "Акты поступления грузов": ["admin", "manager", "user"],
+    "Акты поступления грузов": ["admin", "manager"],
     "Рейсы судов": ["admin", "manager"],
 
-    // Справочники
     Вагоны: ["admin"],
     Судна: ["admin"],
     Грузы: ["admin"],
@@ -221,6 +220,16 @@ export function DataTable<TData, TValue>({
 
   const Icon = fallbackTable?.icon;
 
+  function renderSortingIcon(header: any) {
+    const isSorted = header.column.getIsSorted();
+    if (isSorted === "asc") {
+      return <ChevronUp className="inline-block w-4 h-4 ml-1 text-white" />;
+    }
+    if (isSorted === "desc") {
+      return <ChevronDown className="inline-block w-4 h-4 ml-1 text-white" />;
+    }
+    return null;
+  }
   return (
     <>
       <div className="justify-start text-white text-4xl px-1 py-0.5 h-auto w-full">
@@ -243,17 +252,26 @@ export function DataTable<TData, TValue>({
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
+                {headerGroup.headers.map((header) => {
+                  const canSort = header.column.getCanSort();
+                  const sortingState = header.column.getIsSorted();
+
+                  return (
+                    <TableHead
+                      key={header.id}
+                      className="cursor-pointer select-none hover:bg-gray-700"
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      <div className="flex items-center">
+                        {flexRender(
                           header.column.columnDef.header,
                           header.getContext()
                         )}
-                  </TableHead>
-                ))}
-
+                        {renderSortingIcon(header)}
+                      </div>
+                    </TableHead>
+                  );
+                })}
                 <TableHead>
                   <span className="flex justify-end text-sm text-gray-500">
                     Действия
@@ -338,7 +356,16 @@ export function DataTable<TData, TValue>({
         onClose={() => setSelectedRow(null)}
         title={title}
         columns={columns}
+        status={status}
+        cargo={cargo}
+        cargo_act_in={cargo_act_in}
+        wagon={wagon}
+        vessel={vessel}
+        shipper={shipper}
+        consignee={consignee}
+        warehouse={warehouse}
       />
+
       <ConfirmDialog
         open={deleteDialogOpen}
         onClose={() => setDeleteDialogOpen(false)}

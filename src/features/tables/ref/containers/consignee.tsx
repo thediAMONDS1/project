@@ -1,6 +1,6 @@
 import TableLayout from "../../ui/table-form-layout";
 
-import { getCurrentUser } from "@/entities/ref/user/services/get-current-user";
+import { getCurrentUser } from "@/entities/user/services/get-current-user";
 import { CreateConsigneeButton } from "@/features/dialogs/consignee/containers/dialog-form";
 import { columns } from "../columns/consignee";
 import { getConsigneeData } from "@/entities/ref/consignee/repositories/consignee";

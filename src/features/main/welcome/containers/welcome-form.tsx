@@ -12,23 +12,23 @@ export default function WelcomeForm() {
         <div className="bg-opacity-50 p-8 rounded-lg max-w-xl text-center">
           <Image
             src={logo}
-            alt="CoalFlow Logo"
+            alt="Логотип CoalFlow"
             width={300}
             className="mx-auto mb-4"
           />
           <h1 className="text-2xl font-bold text-white">
-            Reliable Transportation of Mineral Resources – Your Trusted
-            Logistics Partner
+            Надёжная транспортировка минеральных ресурсов — ваш проверенный
+            логистический партнёр
           </h1>
           <p className="text-sm text-gray-300 mt-2">
-            We are leaders in mineral resource transportation, ensuring
-            reliable, fast, and safe delivery of any cargo volume. With modern
-            technology and years of experience, we guarantee efficiency and
-            cost-effectiveness for our clients.
+            Мы — лидеры в транспортировке минеральных ресурсов, обеспечиваем
+            надёжную, быструю и безопасную доставку любого объёма грузов.
+            Современные технологии и многолетний опыт позволяют нам
+            гарантировать эффективность и экономичность для наших клиентов.
           </p>
           <Link href="/profile">
             <Button size="lg" className="mt-4 bg-white text-black">
-              Join to us
+              Присоединиться к нам
             </Button>
           </Link>
         </div>

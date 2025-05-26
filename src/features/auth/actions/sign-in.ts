@@ -1,6 +1,6 @@
 "use server";
 
-import { sessionService, verifyUserPassword } from "@/entities/ref/user/server";
+import { sessionService, verifyUserPassword } from "@/entities/user/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -14,7 +14,8 @@ export type SignInFormState = {
 };
 
 const englishOnlyPattern = /^[a-zA-Z0-9]+$/;
-const englishOnlyErrorMessage = "Must contain only English letters or numbers";
+const englishOnlyErrorMessage =
+  "Должно содержать только английские буквы или цифры";
 
 const formDataSchema = z.object({
   login: z.string().min(3).regex(englishOnlyPattern, englishOnlyErrorMessage),
@@ -51,7 +52,7 @@ export const signInAction = async (
     redirect("/tables/cargos-in");
   }
   const errors = {
-    "wrong-login-or-password": "Incorrect login or password",
+    "wrong-login-or-password": "Не правильный логин или пароль",
   }[verifyUserResult.error];
 
   return {

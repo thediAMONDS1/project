@@ -50,7 +50,7 @@ export function ProfileFields({
           <Input
             id="emailId"
             name="email"
-            placeholder="Enter your email"
+            placeholder="Введите email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -66,7 +66,7 @@ export function ProfileFields({
           <Input
             id="phoneId"
             name="phone"
-            placeholder="Enter your phone"
+            placeholder="Введите номер телефона"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
@@ -82,7 +82,7 @@ export function ProfileFields({
           <Input
             id="nameId"
             name="name"
-            placeholder="Enter your name"
+            placeholder="Введите имя"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -98,7 +98,7 @@ export function ProfileFields({
           <Input
             id="lastNameId"
             name="last_name"
-            placeholder="Enter your last name"
+            placeholder="Введите фамилию"
             value={last_name}
             onChange={(e) => setLastName(e.target.value)}
           />

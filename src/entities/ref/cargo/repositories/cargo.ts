@@ -15,6 +15,7 @@ export async function getCargoData() {
     select: {
       id: true,
       cargo_name: true,
+      add_info: true,
     },
   });
 
